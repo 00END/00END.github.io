@@ -11,11 +11,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-     一只小菜鸡
+     困困
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
-  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="shortcut icon" href="/images/cg.jpg" />
   
   
 <link rel="stylesheet" href="/dist/main.css">
@@ -31,6 +31,7 @@
 
   
 
+<link rel="alternate" href="/atom.xml" title="困困" type="application/atom+xml">
 </head>
 
 </html>
@@ -51,7 +52,7 @@
       <img src="/images/bj2.jpg" alt="image frame" />
     </div>
     <div class="cover-inner text-center text-white">
-      <h1><a href="/">一只小菜鸡</a></h1>
+      <h1><a href="/">困困</a></h1>
       <div id="subtitle-box">
         
         <span id="subtitle"></span>
@@ -77,7 +78,7 @@
   <script>
     try {
       var typed = new Typed("#subtitle", {
-        strings: ['每天都困困', '', ''],
+        strings: ['我是一只小菜鸡呜呜呜~', '', ''],
         startDelay: 0,
         typeSpeed: 200,
         loop: true,
@@ -94,19 +95,11 @@
   
   
   
-
 <div class="notice" style="margin-top:50px">
     <i class="ri-heart-fill"></i>
-    <div class="notice-content" id="broad"></div>
+    <div class="notice-content">a little vegetable chicken</div>
 </div>
-<script type="text/javascript">
-    fetch('https://v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("broad").innerHTML = data.hitokoto;
-        })
-        .catch(console.error)
-</script>
+
 
 <style>
     .notice {
@@ -141,7 +134,7 @@
     
     
     <article
-  id="post-hello-world"
+  id="post-模块"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -152,34 +145,685 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2021/03/25/hello-world/"
-    >Hello World</a> 
+  <a class="article-title" href="/2021/03/26/%E6%A8%A1%E5%9D%97/"
+    >模块</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/03/25/hello-world/" class="article-date">
-  <time datetime="2021-03-24T16:12:35.319Z" itemprop="datePublished">2021-03-25</time>
+      <a href="/2021/03/26/%E6%A8%A1%E5%9D%97/" class="article-date">
+  <time datetime="2021-03-26T13:25:21.000Z" itemprop="datePublished">2021-03-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="导入模块-import-xx"><a href="#导入模块-import-xx" class="headerlink" title="导入模块 import xx"></a>导入模块 import xx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if __name__&#x3D;&#x3D;&#39;__main__&#39;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+
+<p>​    当我们在命令行运行<code>hello</code>模块文件时，Python解释器把一个特殊变量<code>__name__</code>置为<code>__main__</code>，而如果在其他地方导入该<code>hello</code>模块时，<code>if</code>判断将失败，因此，这种<code>if</code>测试可以让一个模块通过命令行运行时执行一些额外的代码，最常见的就是运行测试。</p>
+<p>​    类似<code>_xxx</code>和<code>__xxx</code>这样的函数或变量就是非公开的（private），不应该被直接引用，比如<code>_abc</code>，<code>__abc</code>等</p>
+<h3 id="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"><a href="#外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。" class="headerlink" title="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"></a>外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。</h3><h1 id="安装模块"><a href="#安装模块" class="headerlink" title="安装模块"></a>安装模块</h1><p>​    Windows确保安装时勾选了<code>pip</code>和<code>Add python.exe to Path</code></p>
+<p>​    命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install 模块名</span><br></pre></td></tr></table></figure>
+
+<p>​    推荐直接使用<a target="_blank" rel="noopener" href="https://www.anaconda.com/">Anaconda</a>，内置了许多非常有用的第三方库，装上Anaconda，就相当于把数十个第三方模块自动安装好</p>
+<h3 id="模块搜索路径"><a href="#模块搜索路径" class="headerlink" title="模块搜索路径"></a>模块搜索路径</h3><p>​    当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错</p>
+<p>​    默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在<code>sys</code>模块的<code>path</code>变量中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path</span><br><span class="line">[&#39;&#39;, &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python36.zip&#39;, &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python3.6&#39;, ..., &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#39;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="要添加自己的搜索目录，有两种方法："><a href="#要添加自己的搜索目录，有两种方法：" class="headerlink" title="要添加自己的搜索目录，有两种方法："></a>要添加自己的搜索目录，有两种方法：</h4><p>一是直接修改<code>sys.path</code>，添加要搜索的目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path.append(&#39;&#x2F;Users&#x2F;michael&#x2F;my_py_scripts&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法是在运行时修改，运行结束后失效。</p>
+<p>​    第二种方法是设置环境变量<code>PYTHONPATH</code>，该环境变量的内容会被自动添加到模块搜索路径中。设置方式与设置Path环境变量类似。注意只需要添加你自己的搜索路径，Python自己本身的搜索路径不受影响。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-迭代器和生成器"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8/" class="article-date">
+  <time datetime="2021-03-26T12:11:48.085Z" itemprop="datePublished">2021-03-26</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+   
+      <!-- reward -->
+      
+    </div>
+    
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+    
+ 
+    
+</article>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+    
+    <article
+  id="post-模块1"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E6%A8%A1%E5%9D%971/" class="article-date">
+  <time datetime="2021-03-26T12:11:48.061Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="导入模块-import-xx"><a href="#导入模块-import-xx" class="headerlink" title="导入模块 import xx"></a>导入模块 import xx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if __name__&#x3D;&#x3D;&#39;__main__&#39;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>​    当我们在命令行运行<code>hello</code>模块文件时，Python解释器把一个特殊变量<code>__name__</code>置为<code>__main__</code>，而如果在其他地方导入该<code>hello</code>模块时，<code>if</code>判断将失败，因此，这种<code>if</code>测试可以让一个模块通过命令行运行时执行一些额外的代码，最常见的就是运行测试。</p>
+<p>​    类似<code>_xxx</code>和<code>__xxx</code>这样的函数或变量就是非公开的（private），不应该被直接引用，比如<code>_abc</code>，<code>__abc</code>等</p>
+<h3 id="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"><a href="#外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。" class="headerlink" title="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"></a>外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。</h3><h1 id="安装模块"><a href="#安装模块" class="headerlink" title="安装模块"></a>安装模块</h1><p>​    Windows确保安装时勾选了<code>pip</code>和<code>Add python.exe to Path</code></p>
+<p>​    命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install 模块名</span><br></pre></td></tr></table></figure>
+
+<p>​    推荐直接使用<a target="_blank" rel="noopener" href="https://www.anaconda.com/">Anaconda</a>，内置了许多非常有用的第三方库，装上Anaconda，就相当于把数十个第三方模块自动安装好</p>
+<h3 id="模块搜索路径"><a href="#模块搜索路径" class="headerlink" title="模块搜索路径"></a>模块搜索路径</h3><p>​    当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错</p>
+<p>​    默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在<code>sys</code>模块的<code>path</code>变量中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path</span><br><span class="line">[&#39;&#39;, &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python36.zip&#39;, &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python3.6&#39;, ..., &#39;&#x2F;Library&#x2F;Frameworks&#x2F;Python.framework&#x2F;Versions&#x2F;3.6&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#39;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="要添加自己的搜索目录，有两种方法："><a href="#要添加自己的搜索目录，有两种方法：" class="headerlink" title="要添加自己的搜索目录，有两种方法："></a>要添加自己的搜索目录，有两种方法：</h4><p>一是直接修改<code>sys.path</code>，添加要搜索的目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path.append(&#39;&#x2F;Users&#x2F;michael&#x2F;my_py_scripts&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法是在运行时修改，运行结束后失效。</p>
+<p>​    第二种方法是设置环境变量<code>PYTHONPATH</code>，该环境变量的内容会被自动添加到模块搜索路径中。设置方式与设置Path环境变量类似。注意只需要添加你自己的搜索路径，Python自己本身的搜索路径不受影响。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-函数式编程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2021-03-26T12:11:48.048Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="高级函数"><a href="#高级函数" class="headerlink" title="高级函数"></a>高级函数</h2><p>Q：函数本身赋值给变量呢？</p>
+<p>A：函数本身也可以赋值给变量，即：变量可以指向函数。</p>
+<p>​    函数名也是变量，把函数名指向其他对象，函数名()就不能执行函数体</p>
+<h2 id="传入函数"><a href="#传入函数" class="headerlink" title="传入函数"></a>传入函数</h2><p>​    一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数。</p>
+<p>一个最简单的高阶函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def add(x, y, f):</span><br><span class="line">    return f(x) + f(y)</span><br></pre></td></tr></table></figure>
+
+<p>当我们调用<code>add(-5, 6, abs)</code>时，参数<code>x</code>，<code>y</code>和<code>f</code>分别接收<code>-5</code>，<code>6</code>和<code>abs</code>，根据函数定义，我们可以推导计算过程为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; -5</span><br><span class="line">y &#x3D; 6</span><br><span class="line">f &#x3D; abs</span><br><span class="line">f(x) + f(y) &#x3D;&#x3D;&gt; abs(-5) + abs(6) &#x3D;&#x3D;&gt; 11</span><br><span class="line">return 11</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="map-reduce"><a href="#map-reduce" class="headerlink" title="map/reduce"></a>map/reduce</h1><p>​    <code>map()</code>函数接收两个参数，一个是函数，一个是<code>Iterable</code>，<code>map</code>将传入的函数依次作用到序列的每个元素，并把结果作为新的<code>Iterator</code>返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; def f(x):</span><br><span class="line">...     return x * x</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; r &#x3D; map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line">&gt;&gt;&gt; list(r)</span><br><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br></pre></td></tr></table></figure>
+
+<p>把这个list所有数字转为字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9]))</span><br><span class="line">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    <code>reduce</code>把一个函数作用在一个序列<code>[x1, x2, x3, ...]</code>上，这个函数必须接收两个参数</p>
+<p>对一个序列求和，就可以用<code>reduce</code>实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from functools import reduce</span><br><span class="line">&gt;&gt;&gt; def add(x, y):</span><br><span class="line">...     return x + y</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; reduce(add, [1, 3, 5, 7, 9])</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<p>当然求和运算可以直接用Python内建函数<code>sum()</code>，没必要动用<code>reduce</code>。</p>
+<p>但是如果要把序列<code>[1, 3, 5, 7, 9]</code>变换成整数<code>13579</code>，<code>reduce</code>就可以派上用场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from functools import reduce</span><br><span class="line">&gt;&gt;&gt; def fn(x, y):</span><br><span class="line">...     return x * 10 + y</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; reduce(fn, [1, 3, 5, 7, 9])</span><br><span class="line">13579</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="filter-筛选"><a href="#filter-筛选" class="headerlink" title="filter()  筛选"></a>filter()  筛选</h1><p>​    <code>filter()</code>也接收一个函数和一个序列。和<code>map()</code>不同的是，<code>filter()</code>把传入的函数依次作用于每个元素，然后根据返回值是<code>True</code>还是<code>False</code>决定保留还是丢弃该元素。</p>
+<p>例如，在一个list中，删掉偶数，只保留奇数，可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def is_odd(n):</span><br><span class="line">    return n % 2 &#x3D;&#x3D; 1</span><br><span class="line"></span><br><span class="line">list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15]))</span><br><span class="line"># 结果: [1, 5, 9, 15]</span><br></pre></td></tr></table></figure>
+
+<p>把一个序列中的空字符串删掉，可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def not_empty(s):</span><br><span class="line">    return s and s.strip()</span><br><span class="line"></span><br><span class="line">list(filter(not_empty, [&#39;A&#39;, &#39;&#39;, &#39;B&#39;, None, &#39;C&#39;, &#39;  &#39;]))</span><br><span class="line"># 结果: [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="sorted-排序"><a href="#sorted-排序" class="headerlink" title="sorted  排序"></a>sorted  排序</h1><p><code>sorted()</code>函数就可以对list进行排序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sorted([36, 5, -12, 9, -21])</span><br><span class="line">[-21, -12, 5, 9, 36]</span><br></pre></td></tr></table></figure>
+
+<p>​    以接收一个<code>key</code>函数来实现自定义的排序，例如按绝对值大小排序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sorted([36, 5, -12, 9, -21], key&#x3D;abs)</span><br><span class="line">[5, 9, -12, -21, 36]</span><br></pre></td></tr></table></figure>
+
+<p><strong>字符串排序</strong></p>
+<p>​    默认情况下，对字符串排序，是按照ASCII的大小比较的，由于<code>&#39;Z&#39; &lt; &#39;a&#39;</code>，结果，大写字母<code>Z</code>会排在小写字母<code>a</code>的前面。</p>
+<p>给<code>sorted</code>传入key函数，即可实现忽略大小写的排序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sorted([&#39;bob&#39;, &#39;about&#39;, &#39;Zoo&#39;, &#39;Credit&#39;], key&#x3D;str.lower)</span><br><span class="line">[&#39;about&#39;, &#39;bob&#39;, &#39;Credit&#39;, &#39;Zoo&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>要进行反向排序，不必改动key函数，可以传入第三个参数<code>reverse=True</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sorted([&#39;bob&#39;, &#39;about&#39;, &#39;Zoo&#39;, &#39;Credit&#39;], key&#x3D;str.lower, reverse&#x3D;True)</span><br><span class="line">[&#39;Zoo&#39;, &#39;Credit&#39;, &#39;bob&#39;, &#39;about&#39;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="返回函数"><a href="#返回函数" class="headerlink" title="返回函数"></a>返回函数</h1><p>​    高阶函数除了可以接受函数作为参数外，还可以<strong>把函数作为结果值返回</strong></p>
+<p>​    返回求和的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def lazy_sum(*args):</span><br><span class="line">    def sum():</span><br><span class="line">        ax &#x3D; 0</span><br><span class="line">        for n in args:</span><br><span class="line">            ax &#x3D; ax + n</span><br><span class="line">        return ax</span><br><span class="line">    return sum</span><br></pre></td></tr></table></figure>
+
+<p>当我们调用<code>lazy_sum()</code>时，返回的并不是求和结果，而是求和函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f &#x3D; lazy_sum(1, 3, 5, 7, 9)</span><br><span class="line">&gt;&gt;&gt; f</span><br><span class="line">&lt;function lazy_sum.&lt;locals&gt;.sum at 0x101c6ed90&gt;</span><br></pre></td></tr></table></figure>
+
+<p>调用函数<code>f</code>时，才真正计算求和的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f()</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<p>​    在函数<code>lazy_sum</code>中又定义了函数<code>sum</code>，并且，内部函数<code>sum</code>可以引用外部函数<code>lazy_sum</code>的参数和局部变量，当<code>lazy_sum</code>返回函数<code>sum</code>时，相关参数和变量都保存在返回的函数中，这种称为<strong>闭包</strong></p>
+<p><strong>每次调用都会返回一个新的函数</strong></p>
+<h3 id="返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。"><a href="#返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。" class="headerlink" title="返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。"></a>返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。</h3><p>​    如果一<strong>定要引用循环变量</strong>怎么办？方法是再创建一个函数，用该函数的参数绑定循环变量当前的值，无论该循环变量后续如何更改，已绑定到函数参数的值不变：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def count():</span><br><span class="line">    def f(j):</span><br><span class="line">        def g():</span><br><span class="line">            return j*j</span><br><span class="line">        return g</span><br><span class="line">    fs &#x3D; []</span><br><span class="line">    for i in range(1, 4):</span><br><span class="line">        fs.append(f(i)) # f(i)立刻被执行，因此i的当前值被传入f()</span><br><span class="line">    return fs</span><br></pre></td></tr></table></figure>
+
+<p>再看看结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f1, f2, f3 &#x3D; count()</span><br><span class="line">&gt;&gt;&gt; f1()</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; f2()</span><br><span class="line">4</span><br><span class="line">&gt;&gt;&gt; f3()</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><p>​    关键字<code>lambda</code>表示匿名函数，冒号前面的<code>x</code>表示函数参数。</p>
+<p>匿名函数有个限制，就是只能有一个表达式，不用写<code>return</code>，返回值就是该表达式的结果。</p>
+<p>用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f &#x3D; lambda x: x * x</span><br><span class="line">&gt;&gt;&gt; f</span><br><span class="line">&lt;function &lt;lambda&gt; at 0x101c6ef28&gt;</span><br><span class="line">&gt;&gt;&gt; f(5)</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<p>同样，也可以把匿名函数作为返回值返回，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def build(x, y):</span><br><span class="line">    return lambda: x * x + y * y</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1><h1 id="偏函数"><a href="#偏函数" class="headerlink" title="偏函数"></a>偏函数</h1><p>​    <code>functools</code>模块提供了很多有用的功能，其中一个就是偏函数（Partial function）</p>
+<p>​    <code>int()</code>函数还提供额外的<code>base</code>参数，默认值为<code>10</code>。如果传入<code>base</code>参数，就可以做N进制的转换：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; int(&#39;12345&#39;, base&#x3D;8)</span><br><span class="line">5349</span><br><span class="line">&gt;&gt;&gt; int(&#39;12345&#39;, 16)</span><br><span class="line">74565</span><br></pre></td></tr></table></figure>
+
+<p>​    <code>functools.partial</code>就是帮助我们创建一个偏函数的，不需要我们自己定义<code>int2()</code>，可以直接使用下面的代码创建一个新的函数<code>int2</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import functools</span><br><span class="line">&gt;&gt;&gt; int2 &#x3D; functools.partial(int, base&#x3D;2)</span><br><span class="line">&gt;&gt;&gt; int2(&#39;1000000&#39;)</span><br><span class="line">64</span><br><span class="line">&gt;&gt;&gt; int2(&#39;1010101&#39;)</span><br><span class="line">85</span><br></pre></td></tr></table></figure>
+
+<p>所以，简单总结<code>functools.partial</code>的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。</p>
+<p>注意到上面的新的<code>int2</code>函数，仅仅是把<code>base</code>参数重新设定默认值为<code>2</code>，但也可以在函数调用时传入其他值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; int2(&#39;1000000&#39;, base&#x3D;10)</span><br><span class="line">1000000</span><br></pre></td></tr></table></figure>
+
+<p>最后，创建偏函数时，实际上可以接收函数对象、<code>*args</code>和<code>**kw</code>这3个参数，当传入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int2 &#x3D; functools.partial(int, base&#x3D;2)</span><br></pre></td></tr></table></figure>
+
+<p>实际上固定了int()函数的关键字参数<code>base</code>，也就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int2(&#39;10010&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>相当于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kw &#x3D; &#123; &#39;base&#39;: 2 &#125;</span><br><span class="line">int(&#39;10010&#39;, **kw)</span><br></pre></td></tr></table></figure>
+
+<p>当传入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max2 &#x3D; functools.partial(max, 10)</span><br></pre></td></tr></table></figure>
+
+<p>实际上会把<code>10</code>作为<code>*args</code>的一部分自动加到左边，也就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max2(5, 6, 7)</span><br></pre></td></tr></table></figure>
+
+<p>相当于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">args &#x3D; (10, 5, 6, 7)</span><br><span class="line">max(*args)</span><br></pre></td></tr></table></figure>
+
+<p>结果为<code>10</code>。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>​    当函数的参数个数太多，需要简化时，使用<code>functools.partial</code>可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-字典"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%AD%97%E5%85%B8/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.505Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;] &#x3D; 90</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;]</span><br><span class="line">90</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;] &#x3D; 88</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;]</span><br><span class="line">88</span><br></pre></td></tr></table></figure>
+
+<p>如果key不存在，dict就会报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d[&#39;Thomas&#39;]</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">KeyError: &#39;Thomas&#39;</span><br></pre></td></tr></table></figure>
+
+<p>要避免key不存在的错误，有两种办法，一是通过<code>in</code>判断key是否存在：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;Thomas&#39; in d</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>二是通过dict提供的<code>get()</code>方法，如果key不存在，可以返回<code>None</code>，或者自己指定的value：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d.get(&#39;Thomas&#39;)</span><br><span class="line">&gt;&gt;&gt; d.get(&#39;Thomas&#39;, -1)</span><br><span class="line">-1</span><br></pre></td></tr></table></figure>
+
+<p>要删除一个key，用<code>pop(key)</code>方法，对应的value也会从dict中删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d.pop(&#39;Bob&#39;)</span><br><span class="line">75</span><br><span class="line">&gt;&gt;&gt; d</span><br><span class="line">&#123;&#39;Michael&#39;: 95, &#39;Tracy&#39;: 85&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请务必注意，dict内部存放的顺序和key放入的顺序是没有关系的。</p>
+<p>和list比较，dict有以下几个特点：</p>
+<ol>
+<li>查找和插入的速度极快，不会随着key的增加而变慢；</li>
+<li>需要占用大量的内存，内存浪费多。</li>
+</ol>
+<p>而list相反：</p>
+<ol>
+<li>查找和插入的时间随着元素的增加而增加；</li>
+<li>占用空间小，浪费内存很少。</li>
+</ol>
+<p>dict的key必须是<strong>不可变对象</strong></p>
+<p>​    在Python中，字符串、整数等都是不可变的，因此，可以放心地作为key。而list是可变的，就不能作为key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; key &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; d[key] &#x3D; &#39;a list&#39;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: unhashable type: &#39;list&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-执行顺序"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.500Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h1><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age &#x3D; 20</span><br><span class="line">if age &gt;&#x3D; 18:</span><br><span class="line">    print(&#39;your age is&#39;, age)</span><br><span class="line">    print(&#39;adult&#39;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="if…else"><a href="#if…else" class="headerlink" title="if…else"></a>if…else</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age &#x3D; 3</span><br><span class="line">if age &gt;&#x3D; 18:</span><br><span class="line">    print(&#39;your age is&#39;, age)</span><br><span class="line">    print(&#39;adult&#39;)</span><br><span class="line">else:</span><br><span class="line">    print(&#39;your age is&#39;, age)</span><br><span class="line">    print(&#39;teenager&#39;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="if…elif…else"><a href="#if…elif…else" class="headerlink" title="if…elif…else"></a>if…elif…else</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if &lt;条件判断1&gt;:</span><br><span class="line">    &lt;执行1&gt;</span><br><span class="line">elif &lt;条件判断2&gt;:</span><br><span class="line">    &lt;执行2&gt;</span><br><span class="line">elif &lt;条件判断3&gt;:</span><br><span class="line">    &lt;执行3&gt;</span><br><span class="line">else:</span><br><span class="line">    &lt;执行4&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h1><h3 id="for-x-in-…"><a href="#for-x-in-…" class="headerlink" title="for x in …"></a>for x in …</h3><p>​    把每个元素代入变量<code>x</code>，然后执行缩进块的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sum &#x3D; 0</span><br><span class="line">for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:</span><br><span class="line">    sum &#x3D; sum + x</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+
+<p><code>rabge(x)</code>：生成序列从0开始小于x的整数</p>
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><p>​    只要条件满足，就不断循环，条件不满足时退出循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sum &#x3D; 0</span><br><span class="line">n &#x3D; 99</span><br><span class="line">while n &gt; 0:</span><br><span class="line">    sum &#x3D; sum + n</span><br><span class="line">    n &#x3D; n - 2</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+
+<p><code>break</code>语句可以提前退出循环</p>
+<p>通过<code>continue</code>语句，跳过当前的这次循环，直接开始下一次循环</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-元组"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%85%83%E7%BB%84/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.496Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>​    要定义一个只有1个元素的tuple，如果你这么定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; t &#x3D; (1)</span><br><span class="line">&gt;&gt;&gt; t</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>与数学公式中的小括号产生了歧义</p>
+<p>应该的tuple定义时必须加一个逗号<code>,</code>，来消除歧义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; t &#x3D; (1,)</span><br><span class="line">&gt;&gt;&gt; t</span><br><span class="line">(1,)</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-列表"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%88%97%E8%A1%A8/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.491Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="列表的存储示意图"><a href="#列表的存储示意图" class="headerlink" title="列表的存储示意图"></a>列表的存储示意图</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-集合"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E9%9B%86%E5%90%88/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.486Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="使用花括号-表示"><a href="#使用花括号-表示" class="headerlink" title="使用花括号{}表示"></a>使用花括号{}表示</h3><p>元素不重复，是无序的</p>
+<p>通过<code>add(key)</code>方法可以添加元素到set中，可以重复添加，但不会有效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s.add(4)</span><br><span class="line">&gt;&gt;&gt; s</span><br><span class="line">&#123;1, 2, 3, 4&#125;</span><br><span class="line">&gt;&gt;&gt; s.add(4)</span><br><span class="line">&gt;&gt;&gt; s</span><br><span class="line">&#123;1, 2, 3, 4&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>remove(key)</code>方法可以删除元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s.remove(4)</span><br><span class="line">&gt;&gt;&gt; s</span><br><span class="line">&#123;1, 2, 3&#125;</span><br></pre></td></tr></table></figure>
+
+<p>set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s1 &#x3D; set([1, 2, 3])</span><br><span class="line">&gt;&gt;&gt; s2 &#x3D; set([2, 3, 4])</span><br><span class="line">&gt;&gt;&gt; s1 &amp; s2</span><br><span class="line">&#123;2, 3&#125;</span><br><span class="line">&gt;&gt;&gt; s1 | s2</span><br><span class="line">&#123;1, 2, 3, 4&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p><code>a</code>是变量，而<code>&#39;abc&#39;</code>才是字符串对象！有些时候，我们经常说，对象<code>a</code>的内容是<code>&#39;abc&#39;</code>，但其实是指，<code>a</code>本身是一个变量，它指向的对象的内容才是<code>&#39;abc&#39;</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌───┐                  ┌───────┐</span><br><span class="line">│ a │─────────────────&gt;│ &#39;abc&#39; │</span><br><span class="line">└───┘                  └───────┘</span><br></pre></td></tr></table></figure>
+
+<p>调用<code>a.replace(&#39;a&#39;, &#39;A&#39;)</code>时，实际上调用方法<code>replace</code>是作用在字符串对象<code>&#39;abc&#39;</code>上的，而这个方法虽然名字叫<code>replace</code>，但却没有改变字符串<code>&#39;abc&#39;</code>的内容。相反，<code>replace</code>方法创建了一个新字符串<code>&#39;Abc&#39;</code>并返回，如果我们用变量<code>b</code>指向该新字符串，就容易理解了，变量<code>a</code>仍指向原有的字符串<code>&#39;abc&#39;</code>，但变量<code>b</code>却指向新字符串<code>&#39;Abc&#39;</code>了：</p>
+<p>对于不变对象来说，调用对象自身的任意方法，也不会改变该对象自身的内容。相反，这些方法会创建新的对象并返回，这样，就保证了不可变对象本身永远是不可变的。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-函数传参"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%87%BD%E6%95%B0%E4%BC%A0%E5%8F%82/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.481Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h1><p><code>power(x, n)</code>，缺少一个参数就会报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def power(x, n):</span><br><span class="line">    s &#x3D; 1</span><br><span class="line">    while n &gt; 0:</span><br><span class="line">        n &#x3D; n - 1</span><br><span class="line">        s &#x3D; s * x</span><br><span class="line">    return s</span><br></pre></td></tr></table></figure>
+
+<h1 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def power(x, n&#x3D;2):</span><br><span class="line">    s &#x3D; 1</span><br><span class="line">    while n &gt; 0:</span><br><span class="line">        n &#x3D; n - 1</span><br><span class="line">        s &#x3D; s * x</span><br><span class="line">    return s</span><br></pre></td></tr></table></figure>
+
+<p>调用时<code>power(5)</code>时，相当于调用<code>power(5, 2)</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; power(5)</span><br><span class="line">25</span><br><span class="line">&gt;&gt;&gt; power(5, 2)</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>​    一是必选参数在前，默认参数在后</p>
+<p>​    二是把变化大的参数放前面，变化小的参数放后面，变化小的参数就可以作为默认参数</p>
+<p>​    不按顺序提供部分默认参数时，需要把参数名写上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def enroll(name, gender, age&#x3D;6, city&#x3D;&#39;Beijing&#39;):</span><br><span class="line">    print(&#39;name:&#39;, name)</span><br><span class="line">    print(&#39;gender:&#39;, gender)</span><br><span class="line">    print(&#39;age:&#39;, age)</span><br><span class="line">    print(&#39;city:&#39;, city)</span><br><span class="line"></span><br><span class="line">调用</span><br><span class="line">enroll(&#39;Adam&#39;, &#39;M&#39;, city&#x3D;&#39;Tianjin&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="默认参数必须指向不变对象！"><a href="#默认参数必须指向不变对象！" class="headerlink" title="默认参数必须指向不变对象！"></a>默认参数必须指向不变对象！</h2><p>默认参数有个最大的坑，演示如下：</p>
+<p>先定义一个函数，传入一个list，添加一个<code>END</code>再返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def add_end(L&#x3D;[]):</span><br><span class="line">    L.append(&#39;END&#39;)</span><br><span class="line">    return L</span><br></pre></td></tr></table></figure>
+
+<p>当你正常调用时，结果似乎不错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end([1, 2, 3])</span><br><span class="line">[1, 2, 3, &#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end([&#39;x&#39;, &#39;y&#39;, &#39;z&#39;])</span><br><span class="line">[&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>当你使用默认参数调用时，一开始结果也是对的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>但是，再次调用<code>add_end()</code>时，结果就不对了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;, &#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;, &#39;END&#39;, &#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>很多初学者很疑惑，默认参数是<code>[]</code>，但是函数似乎每次都“记住了”上次添加了<code>&#39;END&#39;</code>后的list。</p>
+<p>原因解释如下：</p>
+<p>Python函数在定义的时候，默认参数<code>L</code>的值就被计算出来了，即<code>[]</code>，因为默认参数<code>L</code>也是一个变量，它指向对象<code>[]</code>，每次调用该函数，如果改变了<code>L</code>的内容，则下次调用时，默认参数的内容就变了，不再是函数定义时的<code>[]</code>了。</p>
+<h3 id="正确"><a href="#正确" class="headerlink" title="正确"></a>正确</h3><p>用<code>None</code>这个不变对象来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def add_end(L&#x3D;None):</span><br><span class="line">    if L is None:</span><br><span class="line">        L &#x3D; []</span><br><span class="line">    L.append(&#39;END&#39;)</span><br><span class="line">    return L</span><br></pre></td></tr></table></figure>
+
+<p>现在，无论调用多少次，都不会有问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h1><p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def calc(*numbers):</span><br><span class="line">    sum &#x3D; 0</span><br><span class="line">    for n in numbers:</span><br><span class="line">        sum &#x3D; sum + n * n</span><br><span class="line">    return sum</span><br></pre></td></tr></table></figure>
+
+<p>​    参数前面加了一个<code>*</code>号。在函数内部，参数<code>numbers</code>接收到的是一个元组（传入任意个参数，包括0个参数）</p>
+<p>传参</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; nums &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; calc(nums[0], nums[1], nums[2])</span><br><span class="line">14</span><br><span class="line">或</span><br><span class="line">&gt;&gt;&gt; nums &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; calc(*nums)</span><br><span class="line">14</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h1><p>关键字参数在函数内部自动组装为一个dict</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, **kw):</span><br><span class="line">    print(&#39;name:&#39;, name, &#39;age:&#39;, age, &#39;other:&#39;, kw)    </span><br><span class="line"></span><br><span class="line">调用</span><br><span class="line">person(&#39;Adam&#39;, 45, gender&#x3D;&#39;M&#39;,job&#x3D;&#39;Engineer&#39;)</span><br><span class="line">输出</span><br><span class="line">name: Adam age: 45 other: &#123;&#39;gender&#39;: &#39;M&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extra &#x3D; &#123;&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br><span class="line">person(&#39;Jack&#39;, 24, **extra)</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">name: Jack age: 24 other: &#123;&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <code>**extra</code>表示把<code>extra</code>这个dict的所有key-value用关键字参数传入到函数的<code>**kw</code>参数，<code>kw</code>将获得一个dict，注意<code>kw</code>获得的dict是<code>extra</code>的一份拷贝，对<code>kw</code>的改动不会影响到函数外的<code>extra</code>。</p>
+<h1 id="命名关键字参数"><a href="#命名关键字参数" class="headerlink" title="命名关键字参数"></a>命名关键字参数</h1><p>​    和关键字参数<code>**kw</code>不同，命名关键字参数需要一个特殊分隔符<code>*</code>，<code>*</code>后面的参数被视为命名关键字参数。</p>
+<p>定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, *, city, job):</span><br><span class="line">    print(name, age, city, job)</span><br></pre></td></tr></table></figure>
+
+<p>调用方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; person(&#39;Jack&#39;, 24, city&#x3D;&#39;Beijing&#39;, job&#x3D;&#39;Engineer&#39;)</span><br><span class="line">Jack 24 Beijing Engineer</span><br></pre></td></tr></table></figure>
+
+<p>如果函数定义中已经有了一个可变参数，后面跟着的命名关键字参数就不再需要一个特殊分隔符<code>*</code>了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, *args, city, job):</span><br><span class="line">    print(name, age, args, city, job)</span><br></pre></td></tr></table></figure>
+
+<p>命名关键字参数必须传入参数名，这和位置参数不同。如果没有传入参数名，调用将报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; person(&#39;Jack&#39;, 24, &#39;Beijing&#39;, &#39;Engineer&#39;)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: person() takes 2 positional arguments but 4 were given</span><br></pre></td></tr></table></figure>
+
+<p>​    使用命名关键字参数时，要特别注意，如果没有可变参数，就必须加一个<code>*</code>作为特殊分隔符。如果缺少<code>*</code>，Python解释器将无法识别位置参数和命名关键字参数</p>
+<h1 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h1><p>​    参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def f1(a, b, c&#x3D;0, *args, **kw):</span><br><span class="line">    print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;args &#x3D;&#39;, args, &#39;kw &#x3D;&#39;, kw)</span><br><span class="line"></span><br><span class="line">def f2(a, b, c&#x3D;0, *, d, **kw):</span><br><span class="line">    print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;d &#x3D;&#39;, d, &#39;kw &#x3D;&#39;, kw)</span><br></pre></td></tr></table></figure>
+
+<p>在函数调用的时候，Python解释器自动按照参数位置和参数名把对应的参数传进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f1(1, 2)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, c&#x3D;3)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;, x&#x3D;99)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#39;x&#39;: 99&#125;</span><br><span class="line">&gt;&gt;&gt; f2(1, 2, d&#x3D;99, ext&#x3D;None)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 d &#x3D; 99 kw &#x3D; &#123;&#39;ext&#39;: None&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最神奇的是通过一个tuple和dict，你也可以调用上述函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; args &#x3D; (1, 2, 3, 4)</span><br><span class="line">&gt;&gt;&gt; kw &#x3D; &#123;&#39;d&#39;: 99, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(*args, **kw)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (4,) kw &#x3D; &#123;&#39;d&#39;: 99, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; args &#x3D; (1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; kw &#x3D; &#123;&#39;d&#39;: 88, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; f2(*args, **kw)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 d &#x3D; 88 kw &#x3D; &#123;&#39;x&#39;: &#39;#&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，对于任意函数，都可以通过类似<code>func(*args, **kw)</code>的形式调用它，无论它的参数是如何定义的。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>注意定义可变参数和关键字参数的语法：</p>
+<p><code>*args</code>是可变参数，args接收的是一个tuple；</p>
+<p><code>**kw</code>是关键字参数，kw接收的是一个dict。</p>
+<p>以及调用函数时如何传入可变参数和关键字参数的语法：</p>
+<p>可变参数既可以直接传入：<code>func(1, 2, 3)</code>，又可以先组装list或tuple，再通过<code>*args</code>传入：<code>func(*(1, 2, 3))</code>；</p>
+<p>关键字参数既可以直接传入：<code>func(a=1, b=2)</code>，又可以先组装dict，再通过<code>**kw</code>传入：<code>func(**&#123;&#39;a&#39;: 1, &#39;b&#39;: 2&#125;)</code>。</p>
+<p>使用<code>*args</code>和<code>**kw</code>是Python的习惯写法，当然也可以用其他参数名，但最好使用习惯用法。</p>
+<p>命名的关键字参数是为了限制调用者可以传入的参数名，同时可以提供默认值。</p>
+<p>定义命名的关键字参数在没有可变参数的情况下不要忘了写分隔符<code>*</code>，否则定义的将是位置参数。</p>
  
       <!-- reward -->
       
@@ -203,6 +847,11 @@
   
 
   
+  <nav class="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+  </nav>
+  
 </section>
 </div>
 
@@ -212,7 +861,7 @@
       <li>
         Copyrights &copy;
         2015-2021
-        <i class="ri-heart-fill heart_icon"></i> 啦啦啦~~~~~~
+        <i class="ri-heart-fill heart_icon"></i> 大白菜
       </li>
     </ul>
     <ul>
@@ -270,7 +919,7 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="一只小菜鸡"></a>
+    <a href="/"><img src="/images/22.jpg" alt="困困"></a>
   </div>
   
   <ul class="nav nav-main">
@@ -292,11 +941,11 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/friend">友链</a>
+      <a class="nav-item-link" href="/friends">友链</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/2019/about">关于我</a>
+      <a class="nav-item-link" href="/about">关于我</a>
     </li>
     
   </ul>
