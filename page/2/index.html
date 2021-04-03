@@ -134,6 +134,127 @@
     
     
     <article
+  id="post-函数传参"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%87%BD%E6%95%B0%E4%BC%A0%E5%8F%82/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.481Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h1><p><code>power(x, n)</code>，缺少一个参数就会报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def power(x, n):</span><br><span class="line">    s &#x3D; 1</span><br><span class="line">    while n &gt; 0:</span><br><span class="line">        n &#x3D; n - 1</span><br><span class="line">        s &#x3D; s * x</span><br><span class="line">    return s</span><br></pre></td></tr></table></figure>
+
+<h1 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def power(x, n&#x3D;2):</span><br><span class="line">    s &#x3D; 1</span><br><span class="line">    while n &gt; 0:</span><br><span class="line">        n &#x3D; n - 1</span><br><span class="line">        s &#x3D; s * x</span><br><span class="line">    return s</span><br></pre></td></tr></table></figure>
+
+<p>调用时<code>power(5)</code>时，相当于调用<code>power(5, 2)</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; power(5)</span><br><span class="line">25</span><br><span class="line">&gt;&gt;&gt; power(5, 2)</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>​    一是必选参数在前，默认参数在后</p>
+<p>​    二是把变化大的参数放前面，变化小的参数放后面，变化小的参数就可以作为默认参数</p>
+<p>​    不按顺序提供部分默认参数时，需要把参数名写上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def enroll(name, gender, age&#x3D;6, city&#x3D;&#39;Beijing&#39;):</span><br><span class="line">    print(&#39;name:&#39;, name)</span><br><span class="line">    print(&#39;gender:&#39;, gender)</span><br><span class="line">    print(&#39;age:&#39;, age)</span><br><span class="line">    print(&#39;city:&#39;, city)</span><br><span class="line"></span><br><span class="line">调用</span><br><span class="line">enroll(&#39;Adam&#39;, &#39;M&#39;, city&#x3D;&#39;Tianjin&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="默认参数必须指向不变对象！"><a href="#默认参数必须指向不变对象！" class="headerlink" title="默认参数必须指向不变对象！"></a>默认参数必须指向不变对象！</h2><p>默认参数有个最大的坑，演示如下：</p>
+<p>先定义一个函数，传入一个list，添加一个<code>END</code>再返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def add_end(L&#x3D;[]):</span><br><span class="line">    L.append(&#39;END&#39;)</span><br><span class="line">    return L</span><br></pre></td></tr></table></figure>
+
+<p>当你正常调用时，结果似乎不错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end([1, 2, 3])</span><br><span class="line">[1, 2, 3, &#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end([&#39;x&#39;, &#39;y&#39;, &#39;z&#39;])</span><br><span class="line">[&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>当你使用默认参数调用时，一开始结果也是对的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>但是，再次调用<code>add_end()</code>时，结果就不对了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;, &#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;, &#39;END&#39;, &#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>很多初学者很疑惑，默认参数是<code>[]</code>，但是函数似乎每次都“记住了”上次添加了<code>&#39;END&#39;</code>后的list。</p>
+<p>原因解释如下：</p>
+<p>Python函数在定义的时候，默认参数<code>L</code>的值就被计算出来了，即<code>[]</code>，因为默认参数<code>L</code>也是一个变量，它指向对象<code>[]</code>，每次调用该函数，如果改变了<code>L</code>的内容，则下次调用时，默认参数的内容就变了，不再是函数定义时的<code>[]</code>了。</p>
+<h3 id="正确"><a href="#正确" class="headerlink" title="正确"></a>正确</h3><p>用<code>None</code>这个不变对象来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def add_end(L&#x3D;None):</span><br><span class="line">    if L is None:</span><br><span class="line">        L &#x3D; []</span><br><span class="line">    L.append(&#39;END&#39;)</span><br><span class="line">    return L</span><br></pre></td></tr></table></figure>
+
+<p>现在，无论调用多少次，都不会有问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br><span class="line">&gt;&gt;&gt; add_end()</span><br><span class="line">[&#39;END&#39;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h1><p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def calc(*numbers):</span><br><span class="line">    sum &#x3D; 0</span><br><span class="line">    for n in numbers:</span><br><span class="line">        sum &#x3D; sum + n * n</span><br><span class="line">    return sum</span><br></pre></td></tr></table></figure>
+
+<p>​    参数前面加了一个<code>*</code>号。在函数内部，参数<code>numbers</code>接收到的是一个元组（传入任意个参数，包括0个参数）</p>
+<p>传参</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; nums &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; calc(nums[0], nums[1], nums[2])</span><br><span class="line">14</span><br><span class="line">或</span><br><span class="line">&gt;&gt;&gt; nums &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; calc(*nums)</span><br><span class="line">14</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h1><p>关键字参数在函数内部自动组装为一个dict</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, **kw):</span><br><span class="line">    print(&#39;name:&#39;, name, &#39;age:&#39;, age, &#39;other:&#39;, kw)    </span><br><span class="line"></span><br><span class="line">调用</span><br><span class="line">person(&#39;Adam&#39;, 45, gender&#x3D;&#39;M&#39;,job&#x3D;&#39;Engineer&#39;)</span><br><span class="line">输出</span><br><span class="line">name: Adam age: 45 other: &#123;&#39;gender&#39;: &#39;M&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extra &#x3D; &#123;&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br><span class="line">person(&#39;Jack&#39;, 24, **extra)</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">name: Jack age: 24 other: &#123;&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <code>**extra</code>表示把<code>extra</code>这个dict的所有key-value用关键字参数传入到函数的<code>**kw</code>参数，<code>kw</code>将获得一个dict，注意<code>kw</code>获得的dict是<code>extra</code>的一份拷贝，对<code>kw</code>的改动不会影响到函数外的<code>extra</code>。</p>
+<h1 id="命名关键字参数"><a href="#命名关键字参数" class="headerlink" title="命名关键字参数"></a>命名关键字参数</h1><p>​    和关键字参数<code>**kw</code>不同，命名关键字参数需要一个特殊分隔符<code>*</code>，<code>*</code>后面的参数被视为命名关键字参数。</p>
+<p>定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, *, city, job):</span><br><span class="line">    print(name, age, city, job)</span><br></pre></td></tr></table></figure>
+
+<p>调用方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; person(&#39;Jack&#39;, 24, city&#x3D;&#39;Beijing&#39;, job&#x3D;&#39;Engineer&#39;)</span><br><span class="line">Jack 24 Beijing Engineer</span><br></pre></td></tr></table></figure>
+
+<p>如果函数定义中已经有了一个可变参数，后面跟着的命名关键字参数就不再需要一个特殊分隔符<code>*</code>了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def person(name, age, *args, city, job):</span><br><span class="line">    print(name, age, args, city, job)</span><br></pre></td></tr></table></figure>
+
+<p>命名关键字参数必须传入参数名，这和位置参数不同。如果没有传入参数名，调用将报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; person(&#39;Jack&#39;, 24, &#39;Beijing&#39;, &#39;Engineer&#39;)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: person() takes 2 positional arguments but 4 were given</span><br></pre></td></tr></table></figure>
+
+<p>​    使用命名关键字参数时，要特别注意，如果没有可变参数，就必须加一个<code>*</code>作为特殊分隔符。如果缺少<code>*</code>，Python解释器将无法识别位置参数和命名关键字参数</p>
+<h1 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h1><p>​    参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def f1(a, b, c&#x3D;0, *args, **kw):</span><br><span class="line">    print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;args &#x3D;&#39;, args, &#39;kw &#x3D;&#39;, kw)</span><br><span class="line"></span><br><span class="line">def f2(a, b, c&#x3D;0, *, d, **kw):</span><br><span class="line">    print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;d &#x3D;&#39;, d, &#39;kw &#x3D;&#39;, kw)</span><br></pre></td></tr></table></figure>
+
+<p>在函数调用的时候，Python解释器自动按照参数位置和参数名把对应的参数传进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f1(1, 2)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, c&#x3D;3)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;, x&#x3D;99)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#39;x&#39;: 99&#125;</span><br><span class="line">&gt;&gt;&gt; f2(1, 2, d&#x3D;99, ext&#x3D;None)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 d &#x3D; 99 kw &#x3D; &#123;&#39;ext&#39;: None&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最神奇的是通过一个tuple和dict，你也可以调用上述函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; args &#x3D; (1, 2, 3, 4)</span><br><span class="line">&gt;&gt;&gt; kw &#x3D; &#123;&#39;d&#39;: 99, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; f1(*args, **kw)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (4,) kw &#x3D; &#123;&#39;d&#39;: 99, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; args &#x3D; (1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; kw &#x3D; &#123;&#39;d&#39;: 88, &#39;x&#39;: &#39;#&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; f2(*args, **kw)</span><br><span class="line">a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 d &#x3D; 88 kw &#x3D; &#123;&#39;x&#39;: &#39;#&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，对于任意函数，都可以通过类似<code>func(*args, **kw)</code>的形式调用它，无论它的参数是如何定义的。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>注意定义可变参数和关键字参数的语法：</p>
+<p><code>*args</code>是可变参数，args接收的是一个tuple；</p>
+<p><code>**kw</code>是关键字参数，kw接收的是一个dict。</p>
+<p>以及调用函数时如何传入可变参数和关键字参数的语法：</p>
+<p>可变参数既可以直接传入：<code>func(1, 2, 3)</code>，又可以先组装list或tuple，再通过<code>*args</code>传入：<code>func(*(1, 2, 3))</code>；</p>
+<p>关键字参数既可以直接传入：<code>func(a=1, b=2)</code>，又可以先组装dict，再通过<code>**kw</code>传入：<code>func(**&#123;&#39;a&#39;: 1, &#39;b&#39;: 2&#125;)</code>。</p>
+<p>使用<code>*args</code>和<code>**kw</code>是Python的习惯写法，当然也可以用其他参数名，但最好使用习惯用法。</p>
+<p>命名的关键字参数是为了限制调用者可以传入的参数名，同时可以提供默认值。</p>
+<p>定义命名的关键字参数在没有可变参数的情况下不要忘了写分隔符<code>*</code>，否则定义的将是位置参数。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-函数"
   class="article article-type-post"
   itemscope
