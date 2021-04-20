@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    java基础 |  困困
+    Java 1基础 |  困困
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -46,7 +46,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-java基础"
+  id="post-Java-1基础"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -57,22 +57,26 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  java基础
+  Java 1基础
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/04/09/java%E5%9F%BA%E7%A1%80/" class="article-date">
+      <a href="/2021/04/09/Java-1%E5%9F%BA%E7%A1%80/" class="article-date">
   <time datetime="2021-04-09T02:24:20.000Z" itemprop="datePublished">2021-04-09</time>
-</a>   
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">6.4k</span>
+            <span class="post-count">7.3k</span>
         </span>
     </span>
 
@@ -81,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">23 分钟</span>
+            <span class="post-count">27 分钟</span>
         </span>
     </span>
 </div>
@@ -496,8 +500,69 @@
 <p>例子：表示该方法可以被子类继承，但不可以被子类重写</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="comment">//如果在public前面加final，则编译时就会报错</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;AAAA&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="comment">//重写父类的f方法</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;BBBB&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFinal_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h1><p><strong>内部类可直接访问外部类属性</strong></p>
+<p><strong>我们可以把内部类当做外部类的一个成员</strong></p>
+<ul>
+<li>内部类定义:<ul>
+<li>在A类的内部但是所有方法的外部定义了一个B类，则B类就是A类的<br>内部类,A是B的外部类</li>
+</ul>
+</li>
+<li>内部类访问原则<ul>
+<li><strong>内部类的方法可以访问外部类所有的成员</strong></li>
+<li><strong>外部类的方法不可以直接访问内部类的成员</strong></li>
+</ul>
+</li>
+<li>内部类的优点:<ul>
+<li>可以让一个类方便的访问另一个类中的所有成员</li>
+<li>增加程序的安全性,有效避免其他不相关类对该类的访问</li>
+</ul>
+</li>
+<li>何时使用内部类<ul>
+<li>如果一个<strong>A类要使用B类的所有成员，并且A类不需要被除B类以外的其他类访问</strong>，则我们应当把A类定义为B类的内部类</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TF</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> TextField tf1，tf2，tf3;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">launch</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">MyMonitor</span> <span class="keyword">implements</span> <span class="title">ActionListener</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="meta">@override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> num1 = Integer.parseInt( tf1.getText() );</span><br><span class="line">        	<span class="keyword">int</span> num2 = Integer.parseInt( tf2.getText() );</span><br><span class="line">            <span class="keyword">int</span> num3 = num1 + num2;</span><br><span class="line">        	tf3.setText(num3 + <span class="string">&quot;&quot;</span>);</span><br><span class="line">    	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="匿名类"><a href="#匿名类" class="headerlink" title="匿名类"></a>匿名类</h1><ul>
+<li>匿名类是一种特殊的内部类</li>
+<li>如果在一个方法内部定义了一个匿名类，则该匿名类可以访问<ul>
+<li><strong>外部类的所有成员</strong></li>
+<li><strong>包裹该匿名类的方法中的所有final类型的局部变量</strong><ul>
+<li>注意：非fianl类型的局部变量无法被匿名类访问</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建匿名类的三种方式"><a href="#创建匿名类的三种方式" class="headerlink" title="创建匿名类的三种方式"></a>创建匿名类的三种方式</h2><ul>
+<li>继承父类</li>
+<li>实现接口</li>
+<li>实现抽象类</li>
+</ul>
+<h3 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h3><p>假设A是接口名</p>
+<p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> A()</span><br><span class="line">&#123;</span><br><span class="line">	实现接口中方法的代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<p>功能：<br>    生成一个实现了A接口的匿名类对象</p>
+<h3 id="实现抽象类"><a href="#实现抽象类" class="headerlink" title="实现抽象类"></a>实现抽象类</h3><p>假设A是抽象类</p>
+<p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> A()</span><br><span class="line">&#123;·</span><br><span class="line">	实现了A类的所有抽象类的方法代码</span><br><span class="line">	添加自己的方法或属性代码【不建议，因为没有实际意义】</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>功能:<br>    生成一个匿名类，该匿名类<strong>必须得实现了A类的所有抽象方法</strong>，当然该匿名类也可以定义自己的属性和方法</p>
+<p><strong>如果A是抽象类，就必须A这个抽象类中所有的抽象方法都实现</strong></p>
+<h3 id="创建匿名类之继承父类"><a href="#创建匿名类之继承父类" class="headerlink" title="创建匿名类之继承父类"></a>创建匿名类之继承父类</h3><p>假设A是个类名</p>
+<p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> A()</span><br><span class="line">&#123;</span><br><span class="line">    重写了A类的方法代码</span><br><span class="line">	添加自己的属性和法【不建议，因为没有实际意义】</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>功能：<br>    生成一个A类的子类对象，该匿名类对象继承了A的所有非private成员</p>
+<p>匿名类可以访问包裹该匿名类的这个外部方法的局部变量不过局部变量的类型是final类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.awt.*;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestWindowf</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//如果把10行的final去掉，本程序在18行就会报错，</span></span><br><span class="line">        <span class="comment">//因为匿名类只能访问包裹它的方法中的final类型的局部变量</span></span><br><span class="line">        <span class="keyword">final</span> Frame f = <span class="keyword">new</span> Frame(); <span class="comment">//10</span></span><br><span class="line">        f.setSize(<span class="number">200</span>,<span class="number">200</span>);</span><br><span class="line">        f.addWindowListener</span><br><span class="line">        &#123;</span><br><span class="line">             <span class="keyword">new</span> WindowAdapter()</span><br><span class="line">             &#123;</span><br><span class="line">        		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">windowClosing</span><span class="params">(WindowEvent e)</span></span></span><br><span class="line"><span class="function">                </span>&#123;</span><br><span class="line">        			f.setVisible(<span class="keyword">false</span>); <span class="comment">//18行</span></span><br><span class="line">                    System.exit(-<span class="number">1</span>);</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        f.setVisible(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名类的优缺点"><a href="#匿名类的优缺点" class="headerlink" title="匿名类的优缺点"></a>匿名类的优缺点</h3><ul>
+<li>如果一个类的语句比较少，逻辑比较简单，而且不经常变动，这个时侯可以使用匿名类</li>
+<li>如果一个类包含了很重要的逻辑，将来要经常修改，则这个类就不应该当做匿名类来使用，匿名类会导致代码的混乱</li>
+</ul>
 <h1 id="接口-interface"><a href="#接口-interface" class="headerlink" title="接口  interface"></a>接口  interface</h1><h3 id="接口的定义"><a href="#接口的定义" class="headerlink" title="接口的定义"></a>接口的定义</h3><p>​    就是批象方法和常量值的集合。从本质上讲，接口是一种特殊的抽象类，只允许有一些常量，特殊方法，不允许被修改</p>
 <h3 id="接口的格式"><a href="#接口的格式" class="headerlink" title="接口的格式"></a>接口的格式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[public] interface interfaceName [extends SuperInterfaceList]</span><br><span class="line">&#123;</span><br><span class="line">	.....	<span class="comment">//常量定义和方法定义</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -612,7 +677,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/04/09/java%E5%9F%BA%E7%A1%80/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/04/09/Java-1%E5%9F%BA%E7%A1%80/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -622,6 +687,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2021/04/09/Java-2%E5%8C%85/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Java 2包
+          
+        </div>
+      </a>
     
     
       <a href="/2021/04/03/%E6%89%AB%E6%8F%8F%E5%99%A8V1/" class="article-nav-link">

@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Hello World |  困困
+    Java 4toString |  困困
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -46,7 +46,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-hello-world"
+  id="post-Java-4toString"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -57,22 +57,26 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Hello World
+  Java 4toString
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/03/25/hello-world/" class="article-date">
-  <time datetime="2021-03-24T16:12:35.319Z" itemprop="datePublished">2021-03-25</time>
-</a>   
+      <a href="/2021/04/15/Java-4toString/" class="article-date">
+  <time datetime="2021-04-15T02:19:46.000Z" itemprop="datePublished">2021-04-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">75</span>
+            <span class="post-count">843</span>
         </span>
     </span>
 
@@ -81,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
@@ -96,19 +100,56 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+  <h1 id="ToString-方法介绍"><a href="#ToString-方法介绍" class="headerlink" title="ToString()方法介绍"></a>ToString()方法介绍</h1><p>类会自动继承Object，里面的ToString方法会输出 <strong>（类名）@（对象的哈希码）</strong></p>
+<p><img src="/2021/04/15/Java-4toString/%E7%A4%BA%E4%BE%8B1.png"></p>
+<p><strong>@后是对象内存地址的十六进制表示</strong></p>
+<p><strong>ToString里面存有对象信息</strong></p>
+<p>例子：System.out.println(类对象名)；示例1</p>
+<p>未重写ToString方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestToString</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		A aa = <span class="keyword">new</span> A();</span><br><span class="line">		System.out.println(aa);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">__________________________________________________</span><br><span class="line">输出结果</span><br><span class="line">    A<span class="meta">@de6ced</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>重写ToSrting方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">return</span><span class="string">&quot;哈哈&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestToString</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        A aa = <span class="keyword">new</span> A();</span><br><span class="line">        System.out.println(aa);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">________________________________________________</span><br><span class="line">    输出结果</span><br><span class="line">    	哈哈</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h1 id="toString方法总结"><a href="#toString方法总结" class="headerlink" title="toString方法总结"></a>toString方法总结</h1><ul>
+<li>所有的类都默认自动继承了Object类</li>
+<li>Object类中的toString方法返回的是<strong>类的名字和该对象哈希吗组成</strong>的一个字符串-</li>
+<li>system.out.printIn(类对对象);<pre><code>   实际输出的是该对象的toString()方法所返回的字符串
+</code></pre>
+</li>
+<li>为了实际需要，建议子类重写从父类Object继承的toString方法</li>
+</ul>
+<h1 id="equals"><a href="#equals" class="headerlink" title="equals"></a>equals</h1><p>String类，处理字符串</p>
+<p>String类中的Equals方法是比较字符串方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A aa1 &#x3D; new A(2);</span><br><span class="line">A aa2 &#x3D; new A(2);</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>aa1 和 aa2 里面存储的是内存地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println( aa1.equals(aa2) ); &#x2F;&#x2F;相互比较</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>Obj的equals认为值虽然一样但内存地址不一样输出falst</p>
+<p>容器 List 和 set 不允许存储相同元素就需要重写equals</p>
+<p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//if(当前对象的i和obj代表的i相等)</span></span><br><span class="line">        <span class="comment">//if(this.i == obj.i) //Obj.i 这么写是错误的，父类的引用不能调用子类特有的成员</span></span><br><span class="line">  		</span><br><span class="line">        <span class="comment">//正确</span></span><br><span class="line">        A aa = (A)Obj;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.i ==aa.i)</span><br><span class="line">        	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStringEquals_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aa1 = <span class="keyword">new</span> A(<span class="number">2</span>);</span><br><span class="line">    	aa2 = <span class="keyword">new</span> A(<span class="number">2</span>);</span><br><span class="line">    	System.out.print1n( aa1.equals(aa2) );<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Object类的equals方法"><a href="#Object类的equals方法" class="headerlink" title="Object类的equals方法"></a>Object类的equals方法</h1><ul>
+<li>所有类都从Object类中继承了equlas方法o</li>
+<li>bject类中equals方法源代码如下:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span> == obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Object中的equals方法是直接判断this和obj本身的值是否相等，即用来判断调用equals的对象和形参obj所引用的对象是否是同一对象，所谓同一对象就是指是内存中同一块存储单元，如果this和obj指向的是同一块内存对象，则返回true，如果this和obj指向的不是同一块内存，则返回false,注意：<strong>即便是内容完全相等的两块不同的内存对象，也会返回false</strong></li>
+<li><strong>如果是同一块内存，则Object中的equals方法返回true。如果是不同的内存，则返回false</strong></li>
+</ul>
+<h1 id="何时需要重写euqals方法"><a href="#何时需要重写euqals方法" class="headerlink" title="何时需要重写euqals方法"></a>何时需要重写euqals方法</h1><ul>
+<li>用一个类构造出来的不同内存的两个对象，如果内存中的值相等，我们一般情况下也应该认为这两个对象相等，很明显Object中的equals()无法完成这样的重任，Object中的<br>equals()方法只有在两个对象是同一块内存时，才返回true,这时候我们就有必要重写父类Object中的equals方法</li>
+<li>如果希望<strong>不同内存但相同内容的两个对象equals时返回true</strong>，则我们需要重写父类的equals方法</li>
+</ul>
+<p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> i;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.i = i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        A aa1 = <span class="keyword">new</span> A(<span class="number">1</span>);</span><br><span class="line">        A aa2 = <span class="keyword">new</span> A(<span class="number">1</span>);</span><br><span class="line">        System.out.println(aa1 == aa2);</span><br><span class="line">        system.out.println(aa1.equals(aa2));   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">___________________________</span><br><span class="line">    输出结果</span><br><span class="line">    	<span class="keyword">false</span></span><br><span class="line">    	<span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+
  
       <!-- reward -->
       
@@ -179,7 +220,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/03/25/hello-world/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/04/15/Java-4toString/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -190,15 +231,20 @@
    
   <nav class="article-nav">
     
-      <a href="/2021/03/26/python%E5%9F%BA%E7%A1%80/" class="article-nav-link">
+      <a href="/2021/04/15/Java-5String%E7%B1%BB/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            (no title)
+            Java 5String类
           
         </div>
       </a>
     
+    
+      <a href="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Java 3异常</div>
+      </a>
     
   </nav>
 
