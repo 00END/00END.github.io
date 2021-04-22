@@ -134,6 +134,338 @@
     
     
     <article
+  id="post-Java-3异常"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/"
+    >Java 3异常</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/" class="article-date">
+  <time datetime="2021-04-12T07:04:40.000Z" itemprop="datePublished">2021-04-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="异常-try-…-catch"><a href="#异常-try-…-catch" class="headerlink" title="异常 try … catch"></a>异常 try … catch</h1><p><strong>异常（exception）不是编译错误，是运行错误，编译错误是error，异常是一个对象</strong></p>
+<p>异常(Exception)是程序运行过程中发生的事件，该事件可以中断程序指令的正常执行流程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestExcep_1</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		A aa = <span class="keyword">new</span> A();</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">		&#123;</span><br><span class="line">			aa.divide(<span class="number">6</span>,O); <span class="comment">//可能错误的代码</span></span><br><span class="line">        &#125;</span><br><span class="line">		<span class="keyword">catch</span>(ArithmeticExcdption e) <span class="comment">//抓取的异常，e用来接收23行抛出的异常对象，e是接受异常的对象</span></span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace(); <span class="comment">//可以简单理解为输出该异常的具体信息</span></span><br><span class="line">			System.out.printf(<span class="string">&quot;除零错误，你的程序出错啦!除数不能为零，嘿&quot;</span>);</span><br><span class="line">			<span class="comment">//应该怎么做</span></span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">		System.out.printf(<span class="string">&quot;今天我很高心，因为我和世界的关系和和谐!\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>只有放进try才会被捕抓到，程序不会连着抛两个异常</strong></p>
+<h1 id="异常的分类"><a href="#异常的分类" class="headerlink" title="异常的分类"></a>异常的分类</h1><p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E5%BC%82%E5%B8%B8%E5%88%86%E7%B1%BB.png"></p>
+<ol>
+<li>Error是系统错误，程序员无法处理这些异常</li>
+<li>Exception是程序员可以捕获并处理的异常</li>
+<li>RuntimeException的子类异常是你可以处理也可以不处理的异常</li>
+<li>凡是继承自Exception但又不是 RuntimeException子类的异常我们都必须的捕捉并进行处理</li>
+<li>不知道异常的名字，可以写Exception ，因为它是所有的异常的父类</li>
+</ol>
+<p><strong>注意：</strong></p>
+<p>​    Java认为放在try里的代码可能不会执行成功，所以m不会赋值成功</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="title">Excep_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> m;</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">		&#123;</span><br><span class="line">			m=<span class="number">2</span>;</span><br><span class="line">			System.out.printf(<span class="string">&quot;m = %d\n&quot;</span>, m);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Except ion e)</span><br><span class="line">        &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">        Systcem.out.printf(<span class="string">&quot;m = %d\n&quot;</span>, m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Error:<br>由Java虚拟机生成并抛出，包括动态链接失败、虚拟机错误等，<strong>Java程序无法对此错误进行处理。</strong></li>
+<li>Runtime Exception:（可不抓也可不抓）<br>.Java虚拟机在运行时生成的异常，如被0除等系统错误、数组下标超范围等，<strong>其产生比较频繁，处理麻烦，对程序可读性和运行效率影响太大</strong>天。因此由系统检测，用户可不做处理，系统将它们交给缺省的异常处理程序（当然，必要时,用户可对其处理)。</li>
+<li>Exception:<br>一般程序中可预知的问题，其产生的异常可能会带来意想不到的结果，因此<strong>Java编译器要求Java程序必须捕获或声明所有的非运行时异常</strong></li>
+</ul>
+<h1 id="为什么需要异常"><a href="#为什么需要异常" class="headerlink" title="为什么需要异常"></a>为什么需要异常</h1><p>例子：从键盘输入整数，不能使用if……else处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.uti1.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestExcep_3</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i;</span><br><span class="line">		Scanner sc = <span class="keyword">new</span> Scanner(System.in); <span class="comment">//System.in 表示键盘 </span></span><br><span class="line">        i = sc.nextInt();</span><br><span class="line">		System.out.printf(<span class="string">&quot;i= %d\n&quot;</span>, i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例1：编程实现把键盘输入的数字赋给整型变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInput_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> i = sc.nextilst();</span><br><span class="line">		System.out.println(<span class="string">&quot;i= &quot;</span> + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果输入的不是合法数字运行结果如下:</p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E6%8A%A5%E9%94%99.png"></p>
+<h2 id="读写错误异常-的处理"><a href="#读写错误异常-的处理" class="headerlink" title="读写错误异常 的处理"></a>读写错误异常 的处理</h2><p>​    本程序出现的问题是无法通过逻辑判断来解决的，Java提供的异常处理机制可以很好的解决这个问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInput</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		Scanner sc = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">    	&#123;</span><br><span class="line">			sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        	<span class="keyword">int</span> i = sc.nextInt();</span><br><span class="line">			System.out.printf(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">    	&#125;</span><br><span class="line">		<span class="keyword">catch</span> (InputMismatchException e)</span><br><span class="line">    	&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;读取错误，程序将终止&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="异常的处理机制-重点"><a href="#异常的处理机制-重点" class="headerlink" title="异常的处理机制(重点)"></a>异常的处理机制(重点)</h1><ul>
+<li>当Java程序运行时出现问题时，系统会自动检测到该错误，并立即生成一个与该错误对应的异常对象</li>
+<li>然后把该异常对象提交给Java虚拟机</li>
+<li>Java虚拟机会自动寻找相应的处理代码来处理这个异常，如果没有找到，则由Java虚拟机做一些简单的处理后，程序被强行终止！</li>
+<li>程序员可以自己编写代码来捕捉可能出现的异常，并编写代码来处理相应的异常</li>
+</ul>
+<h3 id="printStackTrace方法-输出异常信息"><a href="#printStackTrace方法-输出异常信息" class="headerlink" title="printStackTrace方法 输出异常信息"></a>printStackTrace方法 输出异常信息</h3><h2 id="可处理可不处理的异常-和-必须得进行处理的异常"><a href="#可处理可不处理的异常-和-必须得进行处理的异常" class="headerlink" title="可处理可不处理的异常 和 必须得进行处理的异常"></a>可处理可不处理的异常 和 必须得进行处理的异常</h2><h3 id="常见异常之空指针异常"><a href="#常见异常之空指针异常" class="headerlink" title="常见异常之空指针异常"></a>常见异常之空指针异常</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestNullPointerException</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		Person p = <span class="keyword">null</span>;</span><br><span class="line">		System.out.printin(p.age);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C1.png"></p>
+<h3 id="常见异常之下标越界异常"><a href="#常见异常之下标越界异常" class="headerlink" title="常见异常之下标越界异常"></a>常见异常之下标越界异常</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestlndexOutof</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		String friends[]=&#123;<span class="string">&quot;Lisa&quot;</span>,<span class="string">&quot;Bily&quot;</span>,<span class="string">&quot;Kessy&quot;</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">			System.out.println(friends[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">&quot;\nthis is the end&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C2.png"></p>
+<h1 id="处理异常的两种方式"><a href="#处理异常的两种方式" class="headerlink" title="处理异常的两种方式"></a>处理异常的两种方式</h1><h2 id="第一种-throw抛出"><a href="#第一种-throw抛出" class="headerlink" title="第一种 throw抛出"></a>第一种 throw抛出</h2><p>有些异常不处理编译会抛出，f()没有对异常进行处理，交给被调用者处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//public void f()</span></span><br><span class="line">    <span class="comment">//&#123;</span></span><br><span class="line">		<span class="comment">//throw new IOException(); //throw 抛出异常，交给mian处理</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> ArithmeticException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestExcep_5</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="comment">//throws IOException</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        A aa = <span class="keyword">new</span> A();</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">		&#123;</span><br><span class="line">			aa.f();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (IOException e)</span><br><span class="line">        &#123;   </span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>throw将异常抛出函数不处理</strong></p>
+<h2 id="第二种本函数处理"><a href="#第二种本函数处理" class="headerlink" title="第二种本函数处理"></a>第二种本函数处理</h2><h1 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h1><h2 id="异常处理步骤"><a href="#异常处理步骤" class="headerlink" title="异常处理步骤"></a>异常处理步骤</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	可能出现异常的代码块</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (ExceptionName1 e)</span><br><span class="line">&#123;</span><br><span class="line">	当产生ExceptionName1异常时的处理措施</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (ExceptionName2 e)</span><br><span class="line">&#123;</span><br><span class="line">	当产生ExceptionName2异常时的处理措施</span><br><span class="line">&#125;</span><br><span class="line">........</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">	无论是否捕捉到异常都必须处理的代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Finally的作用"><a href="#Finally的作用" class="headerlink" title="Finally的作用"></a>Finally的作用</h2><ul>
+<li>无论try所指定的程序块中是否抛出异常，也无论catch语句的异常类型是否与所抛弃的异常的类型一致，<strong>finally中的代码一定会得到执行</strong></li>
+<li>finally语句为异常处理提供一个统一的出口，使得在控制流程转到程序的其他部分以前，<strong>能够对程序的状态作统一的管理</strong></li>
+<li>通常在finally语句中可以<strong>进行资源的清除工作，如关闭打开的文件、删除临时文件等</strong></li>
+</ul>
+<h1 id="自定义异常-和-throws常见错误解析"><a href="#自定义异常-和-throws常见错误解析" class="headerlink" title="自定义异常 和 throws常见错误解析"></a>自定义异常 和 throws常见错误解析</h1><h2 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h2><ul>
+<li><p>throw用来抛出异常</p>
+</li>
+<li><p>格式：<br>throw new异常名(参数);</p>
+</li>
+<li><p>假设f方法抛出了A异常，则f方法有两种方式来处理A异常</p>
+<ul>
+<li><ol>
+<li>throws A<br> 谁调用f方法，谁处理A异常，f方法本身不处理A异常</li>
+<li>try{ ..….} catch () { …..….}<br> f方法本身自己来处理A异常</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>要抛出的异常必须得是Throwable的子类</strong></p>
+</li>
+</ul>
+<p>自定义异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">Throwable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IOException(); <span class="comment">//throw 抛出异常</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> <span class="keyword">throws</span> B</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> B();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="throws"><a href="#throws" class="headerlink" title="throws"></a>throws</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void f() throws A</span><br><span class="line">&#123;</span><br><span class="line">	.....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    thows A表示调用f方法时f方法可能会抛出A类异常，建议您调用f方法时最好对f方法可能抛出的A类异常进行捕捉</p>
+<ul>
+<li><p><strong>throws A不表示f方法一定会抛出A类异常</strong></p>
+<p>throws A,f方法也可以不抛出A类异常</p>
+</li>
+<li><p><strong>throws A不表示调用f方法时,必须的对A异常进行捕捉</strong></p>
+<ul>
+<li>假设A是RuntimeException子类异常<pre><code>由于RuntimeException的子类异常可以处理也可以不处理，所以编译器允许你调用f方
+</code></pre>
+法时，对f方法抛出的RuntimeException子类异常不进行处理</li>
+</ul>
+</li>
+<li><p><strong>强烈建议你</strong></p>
+<ul>
+<li><strong>对throws出的所有异常进行处理</strong></li>
+<li><strong>如果一个方法内部己经对A异常进行了处理,则就不要再throws A</strong></li>
+</ul>
+</li>
+</ul>
+<p>例如</p>
+<p><img src><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/thrwos1.png" alt="thrwos1"></p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/throws2.png"></p>
+<p>​    <strong>自己设计f方法，内部写有throw，函数名就要写throws。如果不是设计f方法，而是调用f方法，看到写了throws不管是否要捕获，都要自己进行捕获</strong></p>
+<p>​    <strong>自己定义的异常要继承Exception</strong></p>
+<h1 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h1><p>异常抛出的是一个对象</p>
+<p>抛出代码要怎么写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">throw new DivisorIsZeroExceptior();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Throwa 只能抛出类，表示一个声明</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">throws</span> DivisorIsZeroException</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="number">0</span>==b)</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> DivisorIsZeroException(<span class="string">&quot;除数不能为零!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (DivisorIsZeroException e)</span><br><span class="line">        &#123;</span><br><span class="line">        	e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==b)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> DivisorIsZeroException(<span class="string">&quot;除数不能为零!&quot;</span>):</span><br><span class="line">	<span class="keyword">int</span> m=a/b;</span><br><span class="line">	<span class="keyword">return</span> m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="小剧场"><a href="#小剧场" class="headerlink" title="小剧场"></a>小剧场</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void f() throws A</span><br><span class="line">&#123;</span><br><span class="line">	.....</span><br><span class="line">&#125;</span><br><span class="line">void g()</span><br><span class="line">&#123;</span><br><span class="line">	f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>throws A可以不抛异常，g可以直接调用不需要捕获A异常</p>
+<ol>
+<li><p>Throws A不表示f一定抛出A</p>
+</li>
+<li><p>Throws A不表示g调用f时一定要捕获A</p>
+<p>​    要看A是什么异常，如果A是可处理可不处理的异常，g就不需要捕获，如果是必须处理g调用f()时，要写try</p>
+</li>
+</ol>
+<p>3.果A是必须处理的异常，内部不一定要捕获</p>
+<h1 id="注意问题"><a href="#注意问题" class="headerlink" title="注意问题"></a>注意问题</h1><ul>
+<li>所有的catch只能有一个被执行</li>
+<li>有可能所有的catch都没有执行</li>
+<li><strong>先catch子类异常再catch父类异常</strong><br>■如果先catch父类异常再catch子类异常，则编译时会报错</li>
+<li>catch与catch之间是不能有其他代码的</li>
+<li><strong>重写方法抛出异常的范围不能大于被重写方法排除的异常范围</strong></li>
+</ul>
+<h2 id="异常的范围"><a href="#异常的范围" class="headerlink" title="异常的范围"></a>异常的范围</h2><p>​    A,B,C 三个异常A是父类，B继承A，C继承B，A,B,C三个异常都可以被A捕获，因为A是父类，所以<strong>先catch子类异常再catch父类异常</strong></p>
+<h1 id="异常的优点"><a href="#异常的优点" class="headerlink" title="异常的优点"></a>异常的优点</h1><p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E6%B2%A1%E6%9C%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E7%A8%8B%E5%BA%8F.png"></p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E6%9C%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F.png"></p>
+<p>以常规方法处理错误存在的问题<br>■ 观察前面的程序，大家会发现大部分精力花在出错处理上了<br>■ 只把能够想到的错误考虑到，对以外的情况无法处理<br>■ 程序可读性差，大量的错误处理代码混杂在程序中<br>■ 出错返回信息量太少，无法更确切的了解错误状况或原因</p>
+<p><img src="/2021/04/12/Java-3%E5%BC%82%E5%B8%B8/%E6%9C%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F.png"></p>
+<h2 id="异常的优缺点"><a href="#异常的优缺点" class="headerlink" title="异常的优缺点"></a>异常的优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>■ 强制程序员考虑程序的安全性与健壮性<br>■ 增强了程序员对程序的可控性<br>■ 有利于代码的调试<br>■ 把错误处理代码从常规代码中分离出来</p>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><p>■ 异常并不一定能够使程序的逻辑更清晰<br>    因为有时我们必须得编写代码捕捉异常，所以可能会导致程序的逻辑非常混乱<br>■ 异常并不能解决所有的问题</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Java-2包"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/09/Java-2%E5%8C%85/"
+    >Java 2包</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/09/Java-2%E5%8C%85/" class="article-date">
+  <time datetime="2021-04-09T03:01:17.000Z" itemprop="datePublished">2021-04-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="包声明-package"><a href="#包声明-package" class="headerlink" title="包声明 package"></a>包声明 package</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//文件名“TestPackage.java&quot;</span></span><br><span class="line"><span class="keyword">package</span> zhangsan.lisi; <span class="comment">//1行</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPackage</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> statit <span class="keyword">void</span> <span class="title">main</span><span class="params">(String0 args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">new</span> A().print(); </span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;AAAAA&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>package语句必须得是第一条语句</li>
+<li>package zhangsan.lisi表示:<br> 把该文件中所有的类放入zhangsan.lisi这个包中（把编译的东西放进zhangsan文件夹下的lisi的文件夹下），并且该文件中所有的<strong>类真正名字将是包名和类名的组合</strong></li>
+<li>如:类TestPackage 的名字将变成zhangsan.isl.TestPackage，而不再是TestPackage</li>
+<li>编译时建议使用 javac-d . TestPackage.java 尽量不要使用 javac TestPackage.java 因为后者要自己手动建立包目录</li>
+<li>如果不在当前路径下运行程序，则必须保证class文件的最上层目录的父目录位于classpath下</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> zhangsan.lisi;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		System.out.printf(<span class="string">&quot;AAAA\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">M</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">new</span> A().f();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用javac 需要手动建立包成</p>
+<p><strong>真正的类名是 包层+类名</strong></p>
+<p>建议使用命令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -d 启动类名.java</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="java-zhangsan-lisi-TestPackage解析"><a href="#java-zhangsan-lisi-TestPackage解析" class="headerlink" title="java zhangsan.lisi.TestPackage解析"></a>java zhangsan.lisi.TestPackage解析</h4><p>​    先检测当前目录下是否有zhangsan/isi这个包(包即文件夹)，如果有,再检测该包下是否有zhangsan.lisiTestPackage 这个类，如果没有，编译器将再去classpath设置的路径中依次查找。如果都查找失败，则运行时出错</p>
+<p>​    设置变量设置到包层里是错误的，程序找不到包层，设置环境变量要设置最上层</p>
+<h1 id="同包-和-不同包-类的相互访问"><a href="#同包-和-不同包-类的相互访问" class="headerlink" title="同包 和 不同包 类的相互访问"></a>同包 和 不同包 类的相互访问</h1><ul>
+<li>包相当于一个文件夹</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//A.java文件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">     	System.out.println (<span class="string">&quot;AAAA&quot;</span>);   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//B.java文件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">     	aa = <span class="keyword">new</span> A();</span><br><span class="line">        aa.f();   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Javac A.java B.java</span><br><span class="line">java B</span><br><span class="line">----------------------------------</span><br><span class="line">输出结果</span><br><span class="line">AAAA</span><br></pre></td></tr></table></figure>
+
+<p>附注：</p>
+<p>​    因为类A和类B默认是在同一个无名的包中所以彼此可以相互访问，只要是非私有成员都可以被同包的另二个类访问</p>
+<h1 id="不同包类的相互访问"><a href="#不同包类的相互访问" class="headerlink" title="不同包类的相互访问"></a>不同包类的相互访问</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//文件名 A.java</span></span><br><span class="line"><span class="keyword">package</span> zhangsan.lisi;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ma</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.printf(<span class="string">&quot;AAAAA&quot;</span>);		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//文件名 B.java</span></span><br><span class="line"><span class="keyword">package</span> com.ruide;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		zhangsan.lisi.A aa= <span class="keyword">new</span> zhangsan.lisi.A();</span><br><span class="line">        aa.ma();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>单独编译时必须的先编译A.java,后编译B.jva，否则会出错建议两个文件一起编译</p>
+<p>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	javac -d . A.java B.java</span><br><span class="line">或</span><br><span class="line">	javac -d . B.java A.java</span><br></pre></td></tr></table></figure>
+
+<p><strong>只有公有类才能被另一个包访问</strong></p>
+<h2 id="不同访问修饰符"><a href="#不同访问修饰符" class="headerlink" title="不同访问修饰符"></a>不同访问修饰符</h2><ul>
+<li>在同一个包中只有私有的不能被另一个类访问，也只有私有的不能被继承</li>
+<li>在不同包没有任何关系的两个类，只有public类的public成员才可以被另一个类访问</li>
+<li>在不同包中有继承关系的两个类，只有public类的public成员和public类的protected成员可以被另一个包中的子类在内部使用，但是在子类的外部，通过子类对象名只能访问父类的public成员</li>
+</ul>
+<h1 id="使用不同包类的方式"><a href="#使用不同包类的方式" class="headerlink" title="使用不同包类的方式"></a>使用不同包类的方式</h1><p><strong>第一种：使用一个类的全名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ruide;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		zhangsan.lisi.A aa = <span class="keyword">new</span> zhangsan.lisi.A();</span><br><span class="line">        aa.ma();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二种：使用import语句导入一个包中所有的类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ruide;</span><br><span class="line"><span class="keyword">import</span> zhangsan.lisi.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		A aa = <span class="keyword">new</span> A();</span><br><span class="line">        aa.ma();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>第三种：使用import语句导入一个包中特定的类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ruide;</span><br><span class="line"><span class="keyword">import</span> zhangsan.lisi.A;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		A aa = <span class="keyword">new</span> A();aa.ma();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意:导入父包的类并不会自动导入子包的类</strong><br>    如: import zhangsan.*****；只会导入zhangsan这个包下的所有类，并不会导入zhangsan子包lisi这个包中的类<br>    考虑: import java.awt.*****；和 import java.awt.event.*；的区别</p>
+<h3 id="不同包之间的相互方问"><a href="#不同包之间的相互方问" class="headerlink" title="不同包之间的相互方问"></a>不同包之间的相互方问</h3><p>不是内部类，不能添加修饰符，要加就加公有，要不什么都不加</p>
+<p>两个不同的包，只能访问包的公有类，调用的只能是类的公有方法</p>
+<p>不同包继承父类也是只能访问公有的</p>
+<h1 id="jar包的生成-avi"><a href="#jar包的生成-avi" class="headerlink" title="jar包的生成 .avi"></a>jar包的生成 .avi</h1><h2 id="归档工具jar"><a href="#归档工具jar" class="headerlink" title="归档工具jar"></a>归档工具jar</h2><p>​    Java归档工具是JDK中提供的一种多用途的存档及压缩工具，可以将多个文件或目录合并压缩为单个的Java归档文件</p>
+<p><strong>jar文件的主要作用：</strong><br>    发布和使用类库<br>    便于资源的组合和管理</p>
+<p>例如：进入文件夹，把当前文件夹打一个架包，T是名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\桌面\java\&gt;jar cvf T.jar *</span><br></pre></td></tr></table></figure>
+
+<p>架包不能双击打开，除非有菜单页面，可以用压缩包软件打开</p>
+<h2 id="Jar使用举例"><a href="#Jar使用举例" class="headerlink" title="Jar使用举例"></a>Jar使用举例</h2><p>格式</p>
+<ul>
+<li><code>jar -cvf 要生成的包名.jar *</code></li>
+</ul>
+<p>举例</p>
+<ul>
+<li><p><code>jar -cvf c.jar *</code>  <strong>一般使用第一个</strong></p>
+<p>功能：把当前路径下所有的文件即文件夹下所有的内容打包成c.jar</p>
+</li>
+<li><p><code>jar -tf c.jar</code></p>
+<p>功能：在DOS下显示c.jar这个包解压后的文件的内容</p>
+</li>
+<li><p><code>jar -xf d:\1\c.jar</code></p>
+<p>功能：把d:\1\c.jar这个文件中的内容解压到当前目录下</p>
+</li>
+</ul>
+<h2 id="如何使用jar包中的类"><a href="#如何使用jar包中的类" class="headerlink" title="如何使用jar包中的类"></a>如何使用jar包中的类</h2><ul>
+<li>假设现在有一个T.jar包，要想在任何目录下都可以访问T.jar包中的类，则设置classpath时，必须把包名T.jar也设置进去，因为T.jar也相当于一个目录</li>
+<li>如在d:\share\java下有一个T.jar，则classpath必须设置为d:\share\java\T.jar，不能设置为d:\share\java，也不能设置成d:\share\java\T，否则在非当前目录下是无法访问T.jar包中的类的</li>
+<li>Jar包也是一个目录</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> baichi.shabi;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//可以把protected改为public,但却不能改为private,也不能在void前面什么都不写</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		System.out.printf(<span class="string">&quot;AAAAin&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aa = <span class="keyword">new</span> A();</span><br><span class="line">		aa.f();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> zhangsan.lisi;</span><br><span class="line"><span class="keyword">import</span> baichi.shabi.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">	</span>&#123;</span><br><span class="line">    	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>; <span class="comment">//OK</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;GGGGin&quot;</span>);)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestB</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		B bb = <span class="keyword">new</span> B();</span><br><span class="line">        bb.g(); <span class="comment">//OK</span></span><br><span class="line">		<span class="comment">//bb.f(); //error</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本程序证明了:<br>    在不同包中有继承关系的两个类，只有public类的public成员和public类的protected成员可以被另一个包中的子类在内部使用，但是在子类的外部，通过子类对象名只能访问父类的public成员</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Java-1基础"
   class="article article-type-post"
   itemscope
@@ -1179,85 +1511,6 @@
 <p><code>break</code>语句可以提前退出循环</p>
 <p>通过<code>continue</code>语句，跳过当前的这次循环，直接开始下一次循环</p>
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-元组"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-     
-    <div class="article-meta">
-      <a href="/2021/03/26/%E5%85%83%E7%BB%84/" class="article-date">
-  <time datetime="2021-03-26T10:19:45.496Z" itemprop="datePublished">2021-03-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>​    要定义一个只有1个元素的tuple，如果你这么定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; t &#x3D; (1)</span><br><span class="line">&gt;&gt;&gt; t</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>与数学公式中的小括号产生了歧义</p>
-<p>应该的tuple定义时必须加一个逗号<code>,</code>，来消除歧义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; t &#x3D; (1,)</span><br><span class="line">&gt;&gt;&gt; t</span><br><span class="line">(1,)</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-列表"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-     
-    <div class="article-meta">
-      <a href="/2021/03/26/%E5%88%97%E8%A1%A8/" class="article-date">
-  <time datetime="2021-03-26T10:19:45.491Z" itemprop="datePublished">2021-03-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="列表的存储示意图"><a href="#列表的存储示意图" class="headerlink" title="列表的存储示意图"></a>列表的存储示意图</h4> 
       <!-- reward -->
       
     </div>

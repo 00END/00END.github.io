@@ -76,7 +76,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">4.8k</span>
+            <span class="post-count">5.1k</span>
         </span>
     </span>
 
@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">19 分钟</span>
+            <span class="post-count">20 分钟</span>
         </span>
     </span>
 </div>
@@ -355,6 +355,26 @@
 <p>示例</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestObjectlO</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Serializable</span> //如果将<span class="keyword">implements</span> <span class="title">Serializable</span>注释掉，则程序编译时就会报错</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String sname = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sid = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">public</span> <span class="keyword">float</span> sscore = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//transient表示sscore成员不能被序列化</span></span><br><span class="line">    <span class="comment">//所谓不能被序列化就是指:“该成员调用ObjectOutputStream 的 writeOnbject()时不会被保存，调用ObjectInputStream的read0bject()方法时不会被读取”</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> id, <span class="keyword">float</span> score)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sname = name;</span><br><span class="line">        <span class="keyword">this</span>.sid = id;</span><br><span class="line">        <span class="keyword">this</span>.sscore = score;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><ul>
+<li>如何去除警告</li>
+</ul>
+<p><img src="/2021/04/19/Java-9%E6%B5%81/%E8%AD%A6%E5%91%8A.png"></p>
+<ul>
+<li>为什么有警告</li>
+</ul>
+<p>手册里，Iterator<E> 有个尖括号</E></p>
+<ul>
+<li>凡是带尖括号的，内部的数据可以是任意的</li>
+<li>但可以指定具体运行某一次的传入数据的类型</li>
+<li>有尖括号，不指定数据类型就会报错，指定数据类型增强安全性</li>
+</ul>
+<h2 id="泛型定义"><a href="#泛型定义" class="headerlink" title="泛型定义"></a>泛型定义</h2><p>泛型：限制指定某一时刻一个容器中可以传入的数据类型</p>
+<p>泛型是用来限制传入容器、接口中的数据类型</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Integer&gt; it = s.iterator();</span><br><span class="line"></span><br><span class="line">Comparable&lt;T&gt; 接口中有如下方法:</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T o)</span></span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function">要想限制传入Comparable接口的数据类型，可以使用泛型</span></span><br><span class="line"><span class="function">class Student inplements Comparable&lt;Student&gt;</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Student ob)</span> <span class="comment">//注意Student不能写成了Object</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>当指定了接口中传入的数据类型时，该接口要实现集成方法时形参不能写Object，只能写指定具体的类的名字</strong></p>
+<p><strong>真正的泛型：无论这个数据怎样方式存储我们对他用同样的算法执行操作</strong></p>
  
       <!-- reward -->
       

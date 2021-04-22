@@ -76,7 +76,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">4.3k</span>
         </span>
     </span>
 
@@ -85,20 +85,263 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">17 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <h1 id="什么是容器"><a href="#什么是容器" class="headerlink" title="什么是容器"></a>什么是容器</h1><p><strong>有一种类专门用于存放其他类对象，这个类叫集合或者容器</strong></p>
+<h1 id="为什么需要容器"><a href="#为什么需要容器" class="headerlink" title="为什么需要容器"></a>为什么需要容器</h1><ul>
+<li><p>数组存在两个缺陷</p>
+<ul>
+<li>数组长度难以扩充</li>
+<li>数组中元素类型必须相同</li>
+</ul>
+</li>
+<li><p>容器可以弥补数组的这两个缺陷</p>
+</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A[] arr = <span class="keyword">new</span> A[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+<p>​    表示分配了一个数组，数组的每个元素都是A类对象的一个引用，但是如果想扩充数组的长度，比如希望数组的长度变成15，我们是不能直接在原数组内存的后面追加内存的，必须得另外分配长度为15的内存空间，然后利用System.arraycopy()方法来把原数组的内容拷贝到新内存中，很明显，这即耗时。又耗内存!</p>
+<p>​    所以<strong>一旦数组内存己分配，你想改变数组的长度，效率就会变的很低</strong></p>
+<h1 id="容器与现实的对应关系"><a href="#容器与现实的对应关系" class="headerlink" title="容器与现实的对应关系"></a>容器与现实的对应关系</h1><ul>
+<li>集合就是将若干用途、性质相同或相近的“数据”组合而成一个整体。</li>
+<li>数学上，集合类型可以归纳为三种:</li>
+<li>集( Set)<ul>
+<li><strong>Set集合中不区分元素的顺序，不允许出现重复元素</strong></li>
+</ul>
+</li>
+<li>列表(List)<ul>
+<li>注意List不表示链表的意思，而是表示线性结构</li>
+<li><strong>List集合区分元素的顺序，且允许包含重复元素</strong></li>
+</ul>
+</li>
+<li>映射(Map)<ul>
+<li><strong>映射中保存成对的“键-值”(Key-Value〉信息，映射中不能包含重复的键，每个键最多只能映射一个值</strong></li>
+</ul>
+</li>
+<li>Java设计了三个接口来对应数学上的三种集合类型，这三个接口名字分别是Set List Map</li>
+</ul>
+<h1 id="List接口"><a href="#List接口" class="headerlink" title="List接口"></a>List接口</h1><ul>
+<li>List接口是<strong>Collection的子接口</strong>，实现List接口的容器类中的元素是有顺序的，而且可以重复。</li>
+<li>List容器中的元素都对应一个整数型的序号记载其在容器中的位置，可以根据序号存取容器中的元素。</li>
+<li>J2SDK所提供的List容器类有ArrayList，LinkedList等。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">object <span class="title">get</span> <span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line"><span class="function">object <span class="title">set</span> <span class="params">(<span class="keyword">int</span> index,object element)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, object element)</span></span>;</span><br><span class="line"><span class="function">object <span class="title">remove</span> <span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">indexof</span><span class="params">(object o)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lastIndexof</span><span class="params">(Object o)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCollection_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(Stringargs)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Collection c = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        c.add(<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">        c.add(<span class="number">123</span>);</span><br><span class="line">        c.add(<span class="number">66.6</span>);</span><br><span class="line">        System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">________________________________</span><br><span class="line">    输出结果是:</span><br><span class="line">	[zhangsan,<span class="number">123</span>,<span class="number">66.6</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>自己定义的类，要放进容器里，必须把toString重写</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCollection</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	Collection c = <span class="keyword">new</span> LinkedList();</span><br><span class="line">        c.add(<span class="keyword">new</span> Student (<span class="string">&quot; zhangsan&quot;</span>, <span class="number">80</span>));</span><br><span class="line">        c.add(<span class="number">66.6</span>);</span><br><span class="line">    	System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name,<span class="keyword">int</span> age)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	<span class="keyword">this</span>.name = name;</span><br><span class="line">    	<span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果把toString方法注释掉了，则程序输出结果会有乱码</span></span><br><span class="line">    <span class="keyword">public</span> String toString</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">return</span> name +” ”+ age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>强烈建议：所有添加到Collection容器中的对象都应该重写父类 0bject 的 toString 方法</strong></p>
+<h2 id="ArrayList-与-LinkedList-的比较"><a href="#ArrayList-与-LinkedList-的比较" class="headerlink" title="ArrayList 与 LinkedList 的比较"></a>ArrayList 与 LinkedList 的比较</h2><ul>
+<li>ArrayList和LinkedList都实现了List接口中的方法，但两者内部实现不同</li>
+<li>ArrayList底层采用数组完成，而LinkedList则是以一般的双向链表(double-linked list)完成，其内每个对象除了数据本身外，还有两个引用，分别指向前一个元素和后一个元素。</li>
+<li>如果我们经常在List的开始处增加元素，或者在List中进行插入和删除操作，我们应该使用LinkedList，否则的话，使用ArrayList将更加快速。</li>
+<li><strong>ArrayList存取速度快，插入删除慢</strong></li>
+<li><strong>LinkedList存取速度慢，插入删除速度快</strong></li>
+</ul>
+<h2 id="Collections类"><a href="#Collections类" class="headerlink" title="Collections类"></a>Collections类</h2><p>​    Collection接口的实现类，如ArrayList . LinkedList本身并没有提供排序，倒置，查找等方法，这些方法是由Collections类来实现的，该类有很多public static方法，可以直接对Collection接口的实现类进行操作</p>
+<h3 id="Collections类常用算法"><a href="#Collections类常用算法" class="headerlink" title="Collections类常用算法"></a>Collections类常用算法</h3><p>类java.util.collections提供了一些静态方法实现了基于List容器的一些常用算法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List)</span>    对List容器内的元素排序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shuffle</span><span class="params">(List)</span> 对List容器内的对象进行随机排列</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(List)</span> 对List容器内的对象进行逆续排列</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fill</span><span class="params">(List, object)</span></span></span><br><span class="line"><span class="function">  用一个特定的对象重写整个List容器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(List dest,List src)</span></span></span><br><span class="line"><span class="function">  将src List容器内容拷贝到dest List容器</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarysearch</span><span class="params">(List, object)</span></span></span><br><span class="line"><span class="function">  对于顺序的List容器，采用折半查找的方法查找特定对象</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCollections</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        List lt = <span class="keyword">new</span> LinkedList();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">7</span> ;++i)</span><br><span class="line">        &#123;</span><br><span class="line">        	lt.add(<span class="string">&quot;a&quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println (lt);</span><br><span class="line">        Collectigns.shuffle(lt);</span><br><span class="line">            <span class="comment">//记住LinkedList中是没有shuffle方法的，因此丢要通过Collections类的相关方法来实现</span></span><br><span class="line">        System.out.println(lt);</span><br><span class="line">        Collections.sot(lt);</span><br><span class="line">        	<span class="comment">//默认升序排序，要降序很简单，先调用Collections.sort();再调用Collections.reverse()</span></span><br><span class="line">        </span><br><span class="line">        System.out.printlIn(lt);</span><br><span class="line">        Collections.reverse(lt); <span class="comment">//倒置</span></span><br><span class="line">        System.out.println(<span class="string">&quot;倒置之后: &quot;</span> + lt);</span><br><span class="line">        System.out.println(Collections.binarySearch(lt,<span class="string">&quot;a5&quot;</span>));</span><br><span class="line">        	<span class="comment">//因为lt默认不是升序排序的，所以调用Collections.binarySearch()方法是不会成功的      </span></span><br><span class="line">        Collections.sort(lt);</span><br><span class="line">        System.out.println(<span class="string">&quot;重新排序之后: &quot;</span> + lt);</span><br><span class="line">        System.out.println(Collections.binarySearch(lt, <span class="string">&quot;a5&quot;</span>));</span><br><span class="line">        	<span class="comment">//记住，使用binarySearch()方法的前提是该容器已升序排序</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Collections-fill-用法"><a href="#Collections-fill-用法" class="headerlink" title="Collections.fill()用法"></a>Collections.fill()用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List lt = <span class="keyword">new</span> LinkedList(); <span class="comment">//7行</span></span><br><span class="line">lt.add(<span class="string">&quot;111&quot;</span>);</span><br><span class="line">lt.add(<span class="string">&quot;222&quot;</span>);</span><br><span class="line">lt.add(<span class="string">&quot;333&quot;</span>);</span><br><span class="line">System.out.printIn(lt);</span><br><span class="line">Collections.fill(lt,<span class="string">&quot;888&quot;</span>);</span><br><span class="line">System.out.println(lt);</span><br><span class="line">___________________________________</span><br><span class="line">    [<span class="number">111</span>,<span class="number">222</span>,<span class="number">333</span>]</span><br><span class="line">    [<span class="number">888</span>,<span class="number">888</span>,<span class="number">888</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.uti1.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Comparable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span> <span class="params">(<span class="keyword">int</span> id, String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @0verride</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> id + <span class="string">&quot;&quot;</span> + name; <span class="comment">//1000张三</span></span><br><span class="line">        <span class="comment">//System.out.println();</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @0verride</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">colpareTo</span><span class="params">(0bject o)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student st = (Student)o;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.id == st.id)</span><br><span class="line">        	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.id &gt; st.id)</span><br><span class="line">        	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        	<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestList</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        List L= <span class="keyword">new</span> ArrayList ();</span><br><span class="line">        L.add(<span class="keyword">new</span> Student(<span class="number">1000</span>,<span class="string">&quot;张三&quot;</span>);</span><br><span class="line">        L.add(<span class="keyword">new</span> Student(<span class="number">1003</span>,<span class="string">&quot;xxx&quot;</span>);</span><br><span class="line">        L.add(<span class="keyword">new</span> Student(<span class="number">1002</span>,<span class="string">&quot;王五&quot;</span>);</span><br><span class="line">        L.add(<span class="keyword">new</span> Student(<span class="number">1001</span>,<span class="string">&quot;李四&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        Collections.sort(L);</span><br><span class="line">              </span><br><span class="line">        System.out.println(L);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><h4 id="为何要使用Comparable接口"><a href="#为何要使用Comparable接口" class="headerlink" title="为何要使用Comparable接口"></a>为何要使用Comparable接口</h4><ul>
+<li>基本类型数据和String类型数据，它们彼此的比较标准Java语言本身已经提供好了</li>
+<li>用户自定义类对象之间比较的标准Java语言本身是没有提供的</li>
+<li>所以<strong>如果一个容器中含有用户自定义类型的数据，并且我们需要对容器中元素进行排序，或查找某一元素时，我们就必须得制定容器中元素与元素之间比较的标准</strong></li>
+<li>凡是需要进行对象比较/排序的场合均可考虑实现Comparable接口</li>
+</ul>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.urtil.Collections;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果把implements Comparable注释掉了，则程序编译时没有错误，但运行时会报错</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Comparable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> id, String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        retun <span class="string">&quot;id:&quot;</span> + id + <span class="string">&quot;,name:&quot;</span> + name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object o)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Person p= (Person)o;</span><br><span class="line">        retun <span class="keyword">this</span>.id - p.id;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestComparableQuestion</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         ArrayList c = <span class="keyword">new</span> ArrayList();</span><br><span class="line">    	 c.add(<span class="keyword">new</span> Person(<span class="number">1000</span>, <span class="string">&quot;zhangsan&quot;</span>));</span><br><span class="line">         c.add(<span class="keyword">new</span> Person(<span class="number">1002</span>, <span class="string">&quot;wangwu&quot;</span>));</span><br><span class="line">         java.util.Collections.sort(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Comparabel接口介绍"><a href="#Comparabel接口介绍" class="headerlink" title="Comparabel接口介绍"></a>Comparabel接口介绍</h3><ul>
+<li><p>问题：上面的算法根据什么确定容器中对象的”大小”顺序?</p>
+</li>
+<li><p>所有可以”排序”的类都实现了java. lang.Comparable接口,Comparable接口中只有一个方法</p>
+<ul>
+<li>public int compareTo(Object obj);<ul>
+<li>该方法<ul>
+<li>返回 0 表示 this == obj</li>
+<li>返回正数表示 this &gt; obj</li>
+<li>返回负数表示 this &lt; obj</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>这个数值位置固定，值可以重复</p>
+</li>
+<li><p>实现了Comparable接口的类通过实现comparaTo方法从而确定该类对象的排序方式。</p>
+</li>
+</ul>
+<h1 id="Set接口介绍"><a href="#Set接口介绍" class="headerlink" title="Set接口介绍"></a>Set接口介绍</h1><ul>
+<li>Set接口是Collection的子接口，Set接口没有提供额外的方法，但实现Set接口的容器类中的元素是没有有顺序的，而且不可以重复。</li>
+<li>Set容器可以与数学中“集合”的概念相对应。</li>
+<li>J2SDK API中所提供的Set容器类有HashSet，TreeSet等。</li>
+</ul>
+<h2 id="HashSet类"><a href="#HashSet类" class="headerlink" title="HashSet类"></a>HashSet类</h2><ul>
+<li><p>HashSet类实现了Set接口</p>
+</li>
+<li><p>HashSet容器中的元素是不能重复，无顺序的</p>
+</li>
+<li><p>存放入 HashSet 容器中的类必须要实现equals()和hahsCode方法</p>
+</li>
+<li><p><strong>如果要把一个对象放，set接口的实现类的对象里去，必须重构equals和hashcode方法</strong></p>
+<p><strong>才能保证set容器中元素没有重复</strong></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object ob)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Student st = (Student)ob;</span><br><span class="line">	<span class="keyword">return</span> st.id == <span class="keyword">this</span>.id &amp;&amp; st.name == <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> id * <span class="keyword">this</span>.name.hashCode();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="equals-和-hashCode-方法的使用"><a href="#equals-和-hashCode-方法的使用" class="headerlink" title="equals 和 hashCode 方法的使用"></a>equals 和 hashCode 方法的使用</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li><p>什么类要重写，equals 和 hashCode ，什么类不需要重写</p>
+</li>
+<li><p>为什么要重写</p>
+</li>
+<li><p>如何重写</p>
+</li>
+</ol>
+<p>TreeSer 是否需要</p>
+<p>答：什么类要充当容器时，添加到容器对象，必须要实现</p>
+<p>容器是集合：一个可以用来存放其他类对象的类，这种类就叫集合或容器</p>
+<h4 id="重写hashCode方法的必要"><a href="#重写hashCode方法的必要" class="headerlink" title="重写hashCode方法的必要"></a>重写hashCode方法的必要</h4><p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/%E7%A4%BA%E4%BE%8B.png"></p>
+<p><strong>如果是java定义的类有重写 hashCode()，如果是自己定义的类他没有重写hashCode()</strong></p>
+<ul>
+<li>String和 Integer这些Java自带的类都重写了hashCode方法，如果String和 Integer new出来的对象的内容是一样的，则这些对象的hashCode返回值也是一样的，尽管这些对象占用的是不同的内存</li>
+<li>不过用户自定义类型则不同，如本程序的A类，即便是两个内容一模一样的A类对象，它们返回的hashCode值也是不一样的，但是两个内容一模一样的Integer类对象或者String类对象返回的hashCode值却是一样的，因为系统自带的String和Integer类都已经重写了Object的hashCode方法嘛</li>
+<li>如果程序员希望自己定义的类对象，占用不同内存空间但内容却是一样的对象调用hashCode方法返回值是一样的，则程序员就必须自己重写hashCode方法，如本程序的B类</li>
+</ul>
+<h4 id="什么容器必须的重写equals方法和hashCode方法"><a href="#什么容器必须的重写equals方法和hashCode方法" class="headerlink" title="什么容器必须的重写equals方法和hashCode方法"></a>什么容器必须的重写equals方法和hashCode方法</h4><ul>
+<li>添加到HashMap和Hashtable容器中的<strong>键</strong>必须的同时实现equals()方法和hashCode()方法，否则很可能导致容器中出现重复的映射，所谓重复映射是指同一个键值映射在容器中出现了多次</li>
+<li>添加到HashSet容器中的<strong>对象</strong>也必须得同时实现equals()方法和hashCode()方法，否则很可能导致容器中出现重复的对象</li>
+<li>更抽象的讲: <strong>Hashtable Ha shSet HashMap都必须的同时实现equals()方法和hashCode()方法, TreeSet和TreeMa p则不需要实现equals()方法和hashCode()方法</strong></li>
+</ul>
+<h4 id="HashCode存储"><a href="#HashCode存储" class="headerlink" title="HashCode存储"></a>HashCode存储</h4><p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/%E5%AD%98%E5%82%A8%E5%9B%BE.png"></p>
+<p>​    aa根据hashCode找到他存放的位置，然后通过equals方法判断后面是否有根aa对象相同的对象，有则不存放，没有则放，S容器自身不存放对象本身，存放的是地址，地址后面连接了很多元素，根据算法，不同的值不能找到相同的地址</p>
+<p>​    不同的new has值是不同的，只要一重写就不是它的地址了，</p>
+<p>为什么要重写equals方法</p>
+<p>​    需要用eq判断两个对象是否相等，没有重写两个对象的equals是fas，以哈希表为内部存储方式的容器里面，才需要重写里面的hashCode 和 equals，HahSet也要重写，TreeSet不需要重写，因为内部算法不是hash表</p>
+<h4 id="什么类必须得重写equals-和hashCode-方法"><a href="#什么类必须得重写equals-和hashCode-方法" class="headerlink" title="什么类必须得重写equals()和hashCode()方法"></a>什么类必须得重写equals()和hashCode()方法</h4><p>Hashtable HashSet HashMap都必须的同时实现equals()方法和hashCode()方法</p>
+<p>TreeSet和TreeMap则不需要实现equals ()方法和hashCode()方法</p>
+<h4 id="为什么要重写equals-和hashCode-方法"><a href="#为什么要重写equals-和hashCode-方法" class="headerlink" title="为什么要重写equals()和hashCode()方法"></a>为什么要重写equals()和hashCode()方法</h4><ul>
+<li>预备知识：</li>
+<li>散列码：<ul>
+<li>Object中的hashCode方法会返回该对象的内存真实地址的整数化表示，这个形象的不是真正地址的整数值就是哈希码</li>
+</ul>
+</li>
+<li><strong>向HashSet中添加对象时，HashSet先通过该对象的hashCode()计算出相应的桶,然后再根据equals()方法找到相应的对象。如果容器中己存在该对象则不再添加，如果不存在,则添加进去</strong></li>
+</ul>
+<p>（桶排序）</p>
+<h4 id="怎样重写equals-和hashCode-方法"><a href="#怎样重写equals-和hashCode-方法" class="headerlink" title="怎样重写equals()和hashCode()方法"></a>怎样重写equals()和hashCode()方法</h4><h5 id="如何重写equals"><a href="#如何重写equals" class="headerlink" title="如何重写equals()"></a>如何重写equals()</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    如果<span class="keyword">this</span>和Obj的内容是一摸一样的</span><br><span class="line">    	返回<span class="keyword">true</span></span><br><span class="line">    否则</span><br><span class="line">    	返回<span class="keyword">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何重写hashCode-方法"><a href="#如何重写hashCode-方法" class="headerlink" title="如何重写hashCode()方法"></a>如何重写hashCode()方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashcode</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> 当前类中基本类型数据对象的hashCode()方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="例子没复制待完善"><a href="#例子没复制待完善" class="headerlink" title="例子没复制待完善"></a>例子没复制待完善</h1><h1 id="lterator接口（通过这个接口遍历数据）"><a href="#lterator接口（通过这个接口遍历数据）" class="headerlink" title="lterator接口（通过这个接口遍历数据）"></a>lterator接口（通过这个接口遍历数据）</h1><p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/lterator%E7%A4%BA%E6%84%8F%E5%9B%BE.png"></p>
+<ul>
+<li><p>boolean hasNext();</p>
+<ul>
+<li>是用来判断必前游标的后面还是否存在元素，如果存在返回真，否则返回假</li>
+</ul>
+</li>
+<li><p>Object next();</p>
+</li>
+<li><p>先返回当前游标右边的元素，然后游标后移一个位置void remove()</p>
+<ul>
+<li>删除最近返回的元素,在调用remove之前，我们至少保证先调用一次next方法,而且调用next之后只能调用一次remove方法</li>
+<li>remove()方法不推荐使用</li>
+</ul>
+</li>
+<li><p>关键是<strong>游标初始位置是不是在第一个元素前面</strong>，remove之前必须调用next，一次next一次remove</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java. uti1.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestIterator_1</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//可以遍历所有Collection接口的实现类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">showCollection</span><span class="params">(Collection c)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	Iterator it = c.iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext())</span><br><span class="line">        &#123;</span><br><span class="line">        	System.out.printn(it.next());</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ArrayList al = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        al.add(<span class="string">&quot;one&quot;</span>);</span><br><span class="line">        al.add(<span class="number">22</span>);</span><br><span class="line">        al.add(<span class="keyword">new</span> Point (<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">&quot;al容器的内容是:&quot;</span>);</span><br><span class="line">        showCollection(al);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    实现了collection接口就可以遍历，It是游标， 想把容器中的所有元素都输出调用容器对象的iterator方法，方法已经实现好，返回的是一个班指针，写hasNext就知道下面有没有元素，如果有写next会返回元素。指针后移</p>
+<h2 id="TreeSet类"><a href="#TreeSet类" class="headerlink" title="TreeSet类"></a>TreeSet类</h2><ul>
+<li>TreeSet类实现了Set接口</li>
+<li>TreeSet是一个有序集合，TreeSet中元素将按照升<strong>序排列</strong>，缺省是按照自然顺序进行排列，因此TreeSet中元素要实现Comparable接口</li>
+<li>记住:所有可以进行排序的类都应该实现Comparable接口</li>
+</ul>
+<h5 id="TreeSet实例（以树为核心）"><a href="#TreeSet实例（以树为核心）" class="headerlink" title="TreeSet实例（以树为核心）"></a>TreeSet实例（以树为核心）</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Collection c = <span class="keyword">new</span> TreeSet();</span><br><span class="line">c.add(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">c.add(<span class="string">&quot;456&quot;</span>);</span><br><span class="line">c.add(<span class="string">&quot;234&quot;</span>);</span><br><span class="line">c.add(<span class="string">&quot;111&quot;</span>);</span><br><span class="line">c.add(<span class="string">&quot;678&quot;</span>);</span><br><span class="line"></span><br><span class="line">lterator i = c.herator();</span><br><span class="line"><span class="keyword">while</span> (i.hasNext())</span><br><span class="line">&#123;</span><br><span class="line">	System.out.printIn(i.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="HashSet和TreeSet的比较"><a href="#HashSet和TreeSet的比较" class="headerlink" title="HashSet和TreeSet的比较"></a>HashSet和TreeSet的比较</h4><ul>
+<li>HashSet是基于Hash算法实现的，其性能通常都优于</li>
+<li>TreeSet。我们通常都应该使用HashSet，在我们需要排序的功能时，我们才使用TreeSet</li>
+</ul>
+<h1 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h1><p>java.util.Map接口描述了映射结构，Map结构允许以键集、值集合或键-值映射关系集的形式查看某个映射的内容。**(字典)**</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">put</span><span class="params">(Object key, Object value)</span></span></span><br><span class="line"><span class="function">Object <span class="title">get</span><span class="params">(Object key)</span></span></span><br><span class="line"><span class="function">	注意Map接口中并没有 Object <span class="title">get</span><span class="params">(Object value)</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object value)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>哈希冲突，越界【K5隐射到很远 不在容器，越界了】</p>
+<p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%E8%B6%8A%E7%95%8C.png"></p>
+<p>我们希望每个元素印射不一样，希望每个元素映射的地址连续</p>
+<p>哈希因子</p>
+<p>空间百分之75满了，会自动扩充，如果继续放会元素引起哈希冲突</p>
+<p> 要求</p>
+<ol>
+<li><p>哈希因子不能过高</p>
+</li>
+<li><p>冲突如何解决，放在容器后</p>
+</li>
+</ol>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><ul>
+<li>哈希表的定义:<ul>
+<li>哈希表不是只存储需要保存的数据，而是既保存数据，也保存该数据的主键，实际是:先保存主键，然后哈希表会根据某种算法自动计算出以当前主键为主键的数据的存储位置，然后再把该数据保存进去</li>
+</ul>
+</li>
+<li>哈希表:<ul>
+<li>假设待保存的数据是val, val的主键是key，则哈希表是先存储key，然后哈希表会自动根据key计算出val的存储位置，并最终把val存储进去</li>
+</ul>
+</li>
+<li>哈希表注意事项：<ul>
+<li> Hash即哈希表又称散列表-</li>
+<li>Hash中不允许存在重复的键</li>
+<li>哈希表主要是为了提高数据的存储速度和查找速度而设计的</li>
+<li>哈希表是人类的一种追求，人很难设计出完美的哈希表</li>
+<li>几乎所有的哈希表都会产生哈希冲突</li>
+<li>Java中是利用桶来解决哈希冲突的</li>
+</ul>
+</li>
+</ul>
+<h2 id="Map接口-1"><a href="#Map接口-1" class="headerlink" title="Map接口"></a>Map接口</h2><ul>
+<li>Map（映射）是一种把键对象和值对象进行映射的集合，它的每一个元素都包含一对键对象和值对象。</li>
+<li>向Map集合中加入元素时，必须提供一对键对象和值对象，从Map集合中检索元素时，只要给出键对象，就会返回对应的值对象。</li>
+<li>接口Map提供了根据关键字找对应的值的方法get(),定义如下:object get(Object key)</li>
+</ul>
+<h2 id="Map接口方法介绍"><a href="#Map接口方法介绍" class="headerlink" title="Map接口方法介绍"></a>Map接口方法介绍</h2><p>接口Map还提供了设置关键字和对应值的方法put()，定义如下;</p>
+<ul>
+<li></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">put</span><span class="params">(Object key,Object value)</span></span></span><br><span class="line"><span class="function">	根据key计算出存储位置，然后把value存入此位置，如果该位置原来己有元素，则覆盖它该方法返回覆盖之前的元素对象的值，如果以前此位置为空，则返回<span class="keyword">null</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map m)</span></span>;</span><br><span class="line">  把m容器中所有的元素存入当前容器</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object value)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Object <span class="title">remove</span><span class="params">(Object key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/map%E7%A4%BA%E4%BE%8B%E5%9B%BE1.png"></p>
+<p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/map%E7%A4%BA%E4%BE%8B%E5%9B%BE2.png"></p>
+<p><img src="/2021/04/20/Java-10%E5%AE%B9%E5%99%A8/map%E7%A4%BA%E6%84%8F%E5%9B%BE3.png"></p>
+<ul>
+<li><strong>在容器里所有东西都必须是对象</strong></li>
+<li>指针所指的位置是元素前的位置</li>
+<li>next()执行时是划过元素</li>
+<li>it.next() 返回是是父类，需要转换</li>
+<li>无论什么容器，内部的所有元素必须是对象，不能是基本类型数据</li>
+<li>为什么可以放基本类型数据，因为进行了默认进行一个自动封装</li>
+</ul>
+ 
       <!-- reward -->
       
       <div id="reword-out">
@@ -178,6 +421,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2021/04/21/Java-11%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Java 11网络编程
+          
+        </div>
+      </a>
     
     
       <a href="/2021/04/19/Java-9%E6%B5%81/" class="article-nav-link">
