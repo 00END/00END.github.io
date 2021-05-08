@@ -134,6 +134,100 @@
     
     
     <article
+  id="post-字典"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2021/03/26/%E5%AD%97%E5%85%B8/" class="article-date">
+  <time datetime="2021-03-26T10:19:45.505Z" itemprop="datePublished">2021-03-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;] &#x3D; 90</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;]</span><br><span class="line">90</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;] &#x3D; 88</span><br><span class="line">&gt;&gt;&gt; d[&#39;Jack&#39;]</span><br><span class="line">88</span><br></pre></td></tr></table></figure>
+
+<p>如果key不存在，dict就会报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d[&#39;Thomas&#39;]</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">KeyError: &#39;Thomas&#39;</span><br></pre></td></tr></table></figure>
+
+<p>要避免key不存在的错误，有两种办法，一是通过<code>in</code>判断key是否存在：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;Thomas&#39; in d</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>二是通过dict提供的<code>get()</code>方法，如果key不存在，可以返回<code>None</code>，或者自己指定的value：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d.get(&#39;Thomas&#39;)</span><br><span class="line">&gt;&gt;&gt; d.get(&#39;Thomas&#39;, -1)</span><br><span class="line">-1</span><br></pre></td></tr></table></figure>
+
+<p>要删除一个key，用<code>pop(key)</code>方法，对应的value也会从dict中删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d.pop(&#39;Bob&#39;)</span><br><span class="line">75</span><br><span class="line">&gt;&gt;&gt; d</span><br><span class="line">&#123;&#39;Michael&#39;: 95, &#39;Tracy&#39;: 85&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请务必注意，dict内部存放的顺序和key放入的顺序是没有关系的。</p>
+<p>和list比较，dict有以下几个特点：</p>
+<ol>
+<li>查找和插入的速度极快，不会随着key的增加而变慢；</li>
+<li>需要占用大量的内存，内存浪费多。</li>
+</ol>
+<p>而list相反：</p>
+<ol>
+<li>查找和插入的时间随着元素的增加而增加；</li>
+<li>占用空间小，浪费内存很少。</li>
+</ol>
+<p>dict的key必须是<strong>不可变对象</strong></p>
+<p>​    在Python中，字符串、整数等都是不可变的，因此，可以放心地作为key。而list是可变的，就不能作为key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; key &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; d[key] &#x3D; &#39;a list&#39;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: unhashable type: &#39;list&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-执行顺序"
   class="article article-type-post"
   itemscope
